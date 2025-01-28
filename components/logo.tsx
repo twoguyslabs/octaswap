@@ -27,7 +27,7 @@ export default function Logo() {
                 width={0}
                 height={0}
                 data-state={state}
-                className="data-[state=expanded]:!w-6 data-[state=collapsed]:!w-5"
+                className="data-[state=expanded]:!w-6 data-[state=collapsed]:!w-[1.1rem]"
               />
             </div>
             <div className="text-lg font-bold">OctaSwap</div>

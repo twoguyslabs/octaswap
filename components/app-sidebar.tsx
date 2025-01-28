@@ -46,15 +46,15 @@ const data = {
       items: [
         {
           title: "Twitter",
-          url: "#",
+          url: "https://x.com/Octa_Swap",
         },
         {
           title: "Telegram",
-          url: "#",
+          url: "https://t.me/Octa_Swap",
         },
         {
           title: "Discord",
-          url: "#",
+          url: "https://discord.gg/R4C8qjJavK",
         },
       ],
     },
@@ -62,12 +62,12 @@ const data = {
   misc: [
     {
       name: "Whitepaper",
-      url: "#",
+      url: "https://up5ojfu58o0vkn52.public.blob.vercel-storage.com/docs/OctaSwap%20Whitepaper.pdf",
       icon: BookOpen,
     },
     {
       name: "Octa Bridge",
-      url: "#",
+      url: "https://bridge.octa.space/",
       icon: ExternalLink,
     },
   ],

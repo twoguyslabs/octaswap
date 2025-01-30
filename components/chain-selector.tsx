@@ -27,7 +27,7 @@ export default function ChainSelector() {
         )}
       </div>
       <div>
-        <span className="font-semibold text-base">{chain?.name}</span>
+        <span className="font-semibold">{chain?.name}</span>
       </div>
     </SidebarMenuButton>
   );

@@ -69,7 +69,7 @@ const Sidebar = dynamic(
         </SidebarProvider>
       );
     }),
-  { ssr: false }
+  { ssr: false },
 );
 
 export default Sidebar;

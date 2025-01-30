@@ -21,7 +21,7 @@ export default function WalletButton() {
         <Wallet size={18} />
       </div>
       <div>
-        <span className="font-semibold text-base">
+        <span className="font-semibold">
           {isConnected ? formattedAddress : "Connect Wallet"}
         </span>
       </div>

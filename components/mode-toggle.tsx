@@ -29,9 +29,7 @@ export function ModeToggle() {
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </div>
-              <span className="text-base !capitalize font-semibold">
-                {theme}
-              </span>
+              <span className="font-semibold !capitalize">{theme}</span>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

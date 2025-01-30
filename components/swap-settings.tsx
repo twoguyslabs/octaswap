@@ -28,7 +28,7 @@ export default function SwapSettings() {
         <DialogHeader className="py-4">
           <DialogTitle>Swap Settings</DialogTitle>
           <VisuallyHidden>
-            <DialogDescription></DialogDescription>
+            <DialogDescription className="hidden"></DialogDescription>
           </VisuallyHidden>
         </DialogHeader>
         <Slippage />

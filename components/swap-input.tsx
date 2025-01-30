@@ -71,9 +71,14 @@ export default function SwapInput() {
               variant="outline"
               className="absolute inset-y-1/2 right-4 -translate-y-1/2"
             >
-              <div className="relative h-6 w-6">
-                <Image src={ocsLogo} alt="OCS Logo" fill />
-              </div>
+              <Image
+                src={ocsLogo}
+                alt="OCS Logo"
+                width={0}
+                height={0}
+                quality={100}
+                className="h-6 w-6"
+              />
               <span className="text-xl font-bold">OCS</span>
             </Button>
           </DialogTrigger>
@@ -103,9 +108,14 @@ export default function SwapInput() {
                         variant="ghost"
                         className="flex w-full justify-start gap-x-3 rounded-none py-8"
                       >
-                        <div className="relative h-8 w-8">
-                          <Image src={token.logo} alt="OCS Logo" fill />
-                        </div>
+                        <Image
+                          src={token.logo}
+                          alt="OCS Logo"
+                          width={0}
+                          height={0}
+                          quality={100}
+                          className="h-8 w-8"
+                        />
                         <div className="flex flex-col items-start">
                           <span className="text-lg font-bold">
                             {token.symbol}

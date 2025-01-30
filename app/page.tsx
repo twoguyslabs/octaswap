@@ -3,6 +3,7 @@
 import SwapInput from "@/components/swap-input";
 import SwapSettings from "@/components/swap-settings";
 import SwapTokenPlace from "@/components/swap-token-place";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 
@@ -18,6 +19,7 @@ const Swap = dynamic(
                 <SwapInput />
                 <SwapTokenPlace />
                 <SwapInput />
+                <Button className="mt-5 w-full">Swap</Button>
               </CardContent>
             </Card>
           </div>

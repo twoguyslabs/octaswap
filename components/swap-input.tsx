@@ -63,7 +63,7 @@ export default function SwapInput() {
         <Input
           type="text"
           placeholder="0.00"
-          className="h-20 text-2xl font-bold"
+          className="h-20 pr-32 text-2xl font-bold"
         />
         <Dialog>
           <DialogTrigger asChild>

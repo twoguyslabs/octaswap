@@ -10,14 +10,10 @@ export default function SwapTokenPlace({
   onSetToken0,
   onSetToken1,
 }: {
-  token0: { name: string; symbol: string; logo: string };
-  token1: { name: string; symbol: string; logo: string };
-  onSetToken0: Dispatch<
-    SetStateAction<{ name: string; symbol: string; logo: string }>
-  >;
-  onSetToken1: Dispatch<
-    SetStateAction<{ name: string; symbol: string; logo: string }>
-  >;
+  token0: Token | undefined;
+  token1: Token | undefined;
+  onSetToken0: Dispatch<SetStateAction<Token | undefined>>;
+  onSetToken1: Dispatch<SetStateAction<Token | undefined>>;
 }) {
   const swapTokenPlace = () => {
     onSetToken0(token1);

@@ -4,5 +4,9 @@ interface Token {
   name: string;
   symbol: string;
   decimals: number;
-  logoURI?: string;
+  logoURL: string;
+}
+
+interface Native {
+  [chainId: number]: Token;
 }

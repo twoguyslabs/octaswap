@@ -13,11 +13,7 @@ import { Button } from "../../components/ui/button";
 import Image from "next/image";
 import TokenList from "./token-list";
 
-export default function SwapInput({
-  token,
-}: {
-  token: { name: string; symbol: string; logo: string };
-}) {
+export default function SwapInput({ token }: { token: Token | undefined }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
@@ -39,16 +35,22 @@ export default function SwapInput({
               variant="outline"
               className="absolute inset-y-1/2 right-4 -translate-y-1/2"
             >
-              <Image
-                src={token.logo}
-                alt={`${token.name} Logo`}
-                width={100}
-                height={100}
-                quality={100}
-                priority
-                className="h-7 w-7"
-              />
-              <span className="text-xl font-bold">{token.symbol}</span>
+              {token?.chainId ? (
+                <>
+                  <Image
+                    src={token.logoURL}
+                    alt={`${token.name} Logo`}
+                    width={100}
+                    height={100}
+                    quality={100}
+                    priority
+                    className="h-7 w-7"
+                  />
+                  <span className="text-xl font-bold">{token.symbol}</span>
+                </>
+              ) : (
+                <span className="text-xl font-bold">Select token</span>
+              )}
             </Button>
           </DialogTrigger>
           <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">

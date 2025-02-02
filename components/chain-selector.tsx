@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 import { SidebarMenuButton } from "./ui/sidebar";
 import { useAppKit } from "@reown/appkit/react";
-import { getLogoByChainId } from "@/lib/chain-logos";
+import { getLogoByChainId } from "@/constants/chain-logos";
 import Image from "next/image";
 
 export default function ChainSelector() {

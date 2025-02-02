@@ -6,6 +6,7 @@ import { mainnet, sepolia, bsc } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider } from "wagmi";
 import { config, projectId, wagmiAdapter } from "@/config/wagmi";
+import { octaspace } from "@/config/chains";
 
 // Set up queryClient
 const queryClient = new QueryClient();
@@ -26,11 +27,15 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [mainnet, bsc, sepolia],
-  defaultNetwork: mainnet,
+  networks: [octaspace, mainnet, bsc, sepolia],
+  defaultNetwork: octaspace,
   metadata: metadata,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
+  },
+  chainImages: {
+    800001: "/octa-logo.svg",
+    11155111: "/eth-logo.png",
   },
 });
 

@@ -6,9 +6,9 @@ import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { native } from "@/constants/native";
+import useChainId from "@/hooks/use-chain-id";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { useChainId } from "wagmi";
 
 const Swap = dynamic(
   () =>

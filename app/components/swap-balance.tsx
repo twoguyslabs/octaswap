@@ -1,9 +1,16 @@
 import useTokenBalance from "@/hooks/use-token-balance";
 import { hasDecimal } from "@/lib/utils";
+import { Dispatch, SetStateAction } from "react";
 import { BiSolidWalletAlt } from "react-icons/bi";
 import { formatUnits } from "viem";
 
-export default function SwapBalance({ token }: { token: Token | undefined }) {
+export default function SwapBalance({
+  token,
+  onSetAmount,
+}: {
+  token: Token | undefined;
+  onSetAmount: Dispatch<SetStateAction<string>>;
+}) {
   const balance = useTokenBalance(token);
   const stringBalance = balance ? formatUnits(balance, 18) : "0";
   const formattedBalance = hasDecimal(stringBalance)
@@ -11,7 +18,10 @@ export default function SwapBalance({ token }: { token: Token | undefined }) {
     : stringBalance;
 
   return (
-    <button className="flex items-center gap-x-1">
+    <button
+      className="flex items-center gap-x-1"
+      onClick={() => onSetAmount(stringBalance)}
+    >
       <div>{formattedBalance}</div>
       <BiSolidWalletAlt size={15} />
     </button>

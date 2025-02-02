@@ -4,7 +4,7 @@ interface Token {
   name: string;
   symbol: string;
   decimals: number;
-  logoURL: string;
+  logoURI: string;
 }
 
 interface Native {

@@ -15,9 +15,5 @@ export default function useChainId() {
     }
   }, [isConnected, onlineChainId, offlineChainId]);
 
-  useEffect(() => {
-    console.log(chainId);
-  });
-
   return chainId;
 }

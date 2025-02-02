@@ -5,7 +5,7 @@ export const NATIVE: Native = {
     name: "Ethereum",
     symbol: "ETH",
     decimals: 18,
-    logoURL: "/eth-logo.png",
+    logoURI: "/eth-logo.png",
   },
   56: {
     chainId: 56,
@@ -13,7 +13,7 @@ export const NATIVE: Native = {
     name: "BNB Smart Chain",
     symbol: "BNB",
     decimals: 18,
-    logoURL: "/bnb-logo.svg",
+    logoURI: "/bnb-logo.svg",
   },
   800001: {
     chainId: 800001,
@@ -21,7 +21,7 @@ export const NATIVE: Native = {
     name: "Octa Space",
     symbol: "OCTA",
     decimals: 18,
-    logoURL: "/octa-logo.svg",
+    logoURI: "/octa-logo.svg",
   },
   11155111: {
     chainId: 11155111,
@@ -29,7 +29,7 @@ export const NATIVE: Native = {
     name: "Sepolia",
     symbol: "ETH",
     decimals: 18,
-    logoURL: "/eth-logo.png",
+    logoURI: "/eth-logo.png",
   },
 };
 

@@ -16,7 +16,7 @@ export default function TokenListTrigger({
         {token?.chainId ? (
           <>
             <Image
-              src={token.logoURL}
+              src={token.logoURI}
               alt={`${token.name} Logo`}
               width={100}
               height={100}

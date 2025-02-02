@@ -2,45 +2,13 @@ import { Coins } from "lucide-react";
 import { ScrollArea } from "../../components/ui/scroll-area";
 import { Button } from "../../components/ui/button";
 import Image from "next/image";
-import ethLogo from "@/assets/eth-logo.png";
-import bnbLogo from "@/assets/bnb-logo.svg";
-import ocsLogo from "@/assets/ocs-logo.svg";
 import { DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import useTokenList from "@/hooks/use-token-list";
 
 export default function TokenList() {
-  const tokens = [
-    {
-      name: "Ethereum",
-      symbol: "ETH",
-      logo: ethLogo,
-    },
-    {
-      name: "Binance Smart Chain",
-      symbol: "BNB",
-      logo: bnbLogo,
-    },
-    {
-      name: "Octa Space",
-      symbol: "OCS",
-      logo: ocsLogo,
-    },
-    {
-      name: "Ethereum",
-      symbol: "ETH",
-      logo: ethLogo,
-    },
-    {
-      name: "Binance Smart Chain",
-      symbol: "BNB",
-      logo: bnbLogo,
-    },
-    {
-      name: "Octa Space",
-      symbol: "OCS",
-      logo: ocsLogo,
-    },
-  ];
+  const tokens = useTokenList();
+
   return (
     <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">
       <div className="space-y-5">
@@ -52,25 +20,33 @@ export default function TokenList() {
           </div>
           <div className="grid">
             <ScrollArea className="h-[95%] pr-2.5">
-              {tokens.map((token, index) => (
+              {tokens?.map((token) => (
                 <Button
-                  key={index}
+                  key={token.name}
                   variant="ghost"
                   className="flex w-full justify-start gap-x-3 rounded-none py-8"
                 >
-                  <Image
-                    src={token.logo}
-                    alt="OCS Logo"
-                    width={100}
-                    height={100}
-                    quality={100}
-                    priority
-                    className="h-8 w-8"
-                  />
-                  <div className="flex flex-col items-start">
-                    <span className="text-lg font-bold">{token.symbol}</span>
-                    <span className="text-muted-foreground">{token.name}</span>
-                  </div>
+                  {token.logoURI && (
+                    <>
+                      <Image
+                        src={token.logoURI}
+                        alt={`${token.name} logo`}
+                        width={100}
+                        height={100}
+                        quality={100}
+                        priority
+                        className="h-8 w-8"
+                      />
+                      <div className="flex flex-col items-start">
+                        <span className="text-lg font-bold">
+                          {token.symbol}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {token.name}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </Button>
               ))}
             </ScrollArea>

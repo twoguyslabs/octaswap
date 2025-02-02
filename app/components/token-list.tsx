@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import useTokens from "@/hooks/use-tokens";
 import useLocalTokens from "@/hooks/use-local-tokens";
 import useCustomTokens from "@/hooks/use-custom-tokens";
-import { matchQuery } from "@/lib/utils";
+import { hasToken, matchQuery } from "@/lib/utils";
 import { DialogContent } from "@/components/ui/dialog";
 import { CircleHelp, Coins } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -20,7 +20,7 @@ export default function TokenList({
   const [searchQuery, setSearchQuery] = useState("");
 
   const tokens = useTokens();
-  const [localTokens] = useLocalTokens();
+  const [localTokens, setLocalTokens] = useLocalTokens();
   const customTokens = useCustomTokens(searchQuery);
 
   const mergedTokens = useMemo(() => {
@@ -29,28 +29,26 @@ export default function TokenList({
   }, [tokens, localTokens]);
 
   const tokenList = useMemo(() => {
-    if (mergedTokens.length === 0) {
-      return searchQuery ? customTokens : [];
-    }
+    if (!customTokens) return;
 
     const filteredTokens = mergedTokens.filter((token: Token) =>
       matchQuery(token, searchQuery),
     );
 
-    if (searchQuery) {
-      return filteredTokens.length > 0 ? filteredTokens : customTokens;
-    }
-
-    return mergedTokens;
+    return filteredTokens.length > 0 ? filteredTokens : customTokens;
   }, [searchQuery, mergedTokens, customTokens]);
 
   const handleClick = (token: Token) => {
+    if (!hasToken(token, mergedTokens)) {
+      setLocalTokens([token]);
+    }
+
     onSetToken(token);
     onOpenDialog(false);
   };
 
   return (
-    <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">
+    <DialogContent className="h-fit w-[90%] overflow-hidden rounded-lg pt-14">
       <div className="space-y-5">
         <Input
           type="text"
@@ -64,7 +62,7 @@ export default function TokenList({
             Tokens
           </div>
           <div className="grid">
-            <ScrollArea className="h-[95%] pr-2.5">
+            <ScrollArea className="h-[350px] pr-2.5">
               {tokenList?.map((token) => (
                 <Button
                   key={token.name}

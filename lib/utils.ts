@@ -27,3 +27,7 @@ export function matchQuery(token: Token | undefined, query: string) {
     token?.address?.toLowerCase().includes(lowerCaseQuery)
   );
 }
+
+export function hasToken(token: Token, tokens: Token[]) {
+  return tokens.some((t) => t.address === token.address);
+}

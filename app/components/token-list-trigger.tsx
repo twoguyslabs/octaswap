@@ -12,7 +12,7 @@ export default function TokenListTrigger({
     <DialogTrigger asChild>
       <Button
         variant="outline"
-        className="absolute inset-y-1/2 right-4 -translate-y-1/2"
+        className="absolute inset-y-1/2 right-4 -translate-y-1/2 px-2"
       >
         {token?.chainId ? (
           token.logoURI ? (

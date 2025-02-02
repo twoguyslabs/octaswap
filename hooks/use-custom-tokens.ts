@@ -28,10 +28,16 @@ export default function useCustomTokens(address: string) {
   });
 
   useEffect(() => {
-    if (chainId && address && name && symbol && decimals) {
-      setCustomTokens([
-        { chainId, address, name, symbol, decimals, logoURI: "" },
-      ]);
+    if (address) {
+      if (chainId && address && name && symbol && decimals) {
+        setCustomTokens([
+          { chainId, address, name, symbol, decimals, logoURI: "" },
+        ]);
+      } else {
+        setCustomTokens([]);
+      }
+    } else {
+      setCustomTokens([]);
     }
   }, [chainId, address, name, symbol, decimals]);
 

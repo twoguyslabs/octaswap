@@ -5,18 +5,14 @@ import SwapSettings from "@/app/components/swap-settings";
 import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { native } from "@/constants/native";
-import useChainId from "@/hooks/use-chain-id";
+import useToken from "@/hooks/use-token";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 
 const Swap = dynamic(
   () =>
     Promise.resolve(function Swap() {
-      const chainId = useChainId();
-
-      const [token0, setToken0] = useState<Token | undefined>(native(chainId));
-      const [token1, setToken1] = useState<Token | undefined>();
+      const [token0, setToken0] = useToken({ useNative: true });
+      const [token1, setToken1] = useToken({ useNative: false });
 
       return (
         <main>

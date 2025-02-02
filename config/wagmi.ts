@@ -4,7 +4,7 @@ import { mainnet, bsc, sepolia } from "@reown/appkit/networks";
 import { octaspace } from "./chains";
 
 // Get projectId from https://cloud.reown.com
-export const projectId = "746a2937d30938bc999b7f8f4c21d4ca";
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 if (!projectId) {
   throw new Error("Project ID is not defined");

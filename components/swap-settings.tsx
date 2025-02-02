@@ -22,7 +22,7 @@ export default function SwapSettings() {
         </DialogTrigger>
       </div>
       <DialogContent
-        className="w-[90%] rounded-lg"
+        className="w-[90%] max-w-md rounded-lg"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader className="py-4">

@@ -5,8 +5,13 @@ import Image from "next/image";
 import { DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import useTokenList from "@/hooks/use-token-list";
+import { Dispatch, SetStateAction } from "react";
 
-export default function TokenList() {
+export default function TokenList({
+  onSetToken,
+}: {
+  onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+}) {
   const tokens = useTokenList();
 
   return (
@@ -25,6 +30,7 @@ export default function TokenList() {
                   key={token.name}
                   variant="ghost"
                   className="flex w-full justify-start gap-x-3 rounded-none py-8"
+                  onClick={() => onSetToken(token)}
                 >
                   {token.logoURI && (
                     <>

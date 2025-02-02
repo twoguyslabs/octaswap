@@ -21,14 +21,14 @@ const Swap = dynamic(
               <SwapSettings />
               <Card>
                 <CardContent className="px-4 py-5">
-                  <SwapInput token={token0} />
+                  <SwapInput token={token0} onSetToken={setToken0} />
                   <SwapTokenPlace
                     token0={token0}
                     token1={token1}
                     onSetToken0={setToken0}
                     onSetToken1={setToken1}
                   />
-                  <SwapInput token={token1} />
+                  <SwapInput token={token1} onSetToken={setToken1} />
                   <Button className="mt-5 w-full">Swap</Button>
                 </CardContent>
               </Card>

@@ -3,8 +3,15 @@ import { Input } from "../../components/ui/input";
 import { Dialog } from "../../components/ui/dialog";
 import TokenList from "./token-list";
 import TokenListTrigger from "./token-list-trigger";
+import { Dispatch, SetStateAction } from "react";
 
-export default function SwapInput({ token }: { token: Token | undefined }) {
+export default function SwapInput({
+  token,
+  onSetToken,
+}: {
+  token: Token | undefined;
+  onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+}) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
@@ -22,7 +29,7 @@ export default function SwapInput({ token }: { token: Token | undefined }) {
         />
         <Dialog>
           <TokenListTrigger token={token} />
-          <TokenList />
+          <TokenList onSetToken={onSetToken} />
         </Dialog>
       </div>
     </div>

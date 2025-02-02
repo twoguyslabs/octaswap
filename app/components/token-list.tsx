@@ -4,8 +4,9 @@ import { Button } from "../../components/ui/button";
 import Image from "next/image";
 import { DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import useTokenList from "@/hooks/use-token-list";
-import { Dispatch, SetStateAction } from "react";
+import useTokens from "@/hooks/use-tokens";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { matchQuery } from "@/lib/utils";
 
 export default function TokenList({
   onSetToken,
@@ -14,7 +15,14 @@ export default function TokenList({
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
   onOpenDialog: Dispatch<SetStateAction<boolean>>;
 }) {
-  const tokens = useTokenList();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const tokens = useTokens();
+
+  const filteredTokens = useMemo(
+    () => tokens?.filter((token) => matchQuery(token, searchQuery)),
+    [searchQuery, tokens],
+  );
 
   const handleClick = (token: Token) => {
     onSetToken(token);
@@ -24,7 +32,12 @@ export default function TokenList({
   return (
     <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">
       <div className="space-y-5">
-        <Input type="text" placeholder="Search tokens" />
+        <Input
+          type="text"
+          placeholder="Search tokens"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
         <div className="space-y-4">
           <div className="flex items-center gap-x-2">
             <Coins size={20} />
@@ -32,7 +45,7 @@ export default function TokenList({
           </div>
           <div className="grid">
             <ScrollArea className="h-[95%] pr-2.5">
-              {tokens?.map((token) => (
+              {filteredTokens?.map((token) => (
                 <Button
                   key={token.name}
                   variant="ghost"

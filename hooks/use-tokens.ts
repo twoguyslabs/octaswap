@@ -2,9 +2,9 @@ import { getTokenListUrl } from "@/lib/get-token-list-url";
 import { useEffect, useState } from "react";
 import { useChainId } from "wagmi";
 
-export default function useTokenList() {
+export default function useTokens() {
   const chainId = useChainId();
-  const [tokenList, setTokenList] = useState<Token[]>();
+  const [tokens, setTokens] = useState<Token[]>();
 
   useEffect(() => {
     const tokenListUrl = getTokenListUrl(chainId);
@@ -12,10 +12,10 @@ export default function useTokenList() {
     const fetchTokens = async () => {
       const response = await fetch(tokenListUrl);
       const data = await response.json();
-      setTokenList(data.tokens);
+      setTokens(data.tokens);
     };
     fetchTokens();
   }, [chainId]);
 
-  return tokenList;
+  return tokens;
 }

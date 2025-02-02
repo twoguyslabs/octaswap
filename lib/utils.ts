@@ -16,5 +16,14 @@ export function generateBreadcrumbs(pathname: string) {
 export function hasDecimal(num: number | string): boolean {
   return typeof num === "number"
     ? num.toString().includes(".")
-    : num.toString().includes(".");
+    : num.includes(".");
+}
+
+export function matchQuery(token: Token | undefined, query: string) {
+  const lowerCaseQuery = query.toLowerCase();
+  return (
+    token?.name?.toLowerCase().includes(lowerCaseQuery) ||
+    token?.symbol?.toLowerCase().includes(lowerCaseQuery) ||
+    token?.address?.toLowerCase().includes(lowerCaseQuery)
+  );
 }

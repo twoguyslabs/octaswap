@@ -33,6 +33,8 @@ export const NATIVE: Native = {
   },
 };
 
-export function native(chainId: number): Token {
+export function native(chainId: number | undefined): Token | undefined {
+  if (!chainId) return undefined;
+
   return NATIVE[chainId];
 }

@@ -10,7 +10,7 @@ const chainLogos: { [id: number]: ChainLogo } = {
   11155111: { id: 11155111, logoURL: "/eth-logo.png" },
 };
 
-export function getLogoByChainId(
+export function getChainLogoByChainId(
   chainId: number | undefined,
 ): string | undefined {
   if (!chainId) return undefined;

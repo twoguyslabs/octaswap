@@ -61,7 +61,7 @@ export default function TokenList() {
                   height={100}
                   quality={100}
                   priority
-                  className="h-9 w-9"
+                  className="h-8 w-8"
                 />
                 <div className="flex flex-col items-start">
                   <span className="text-lg font-bold">{token.symbol}</span>

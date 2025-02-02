@@ -6,7 +6,10 @@ import ReownProvider from "@/contexts/reown-context";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const poppins = Poppins({ weight: ["400", "500", "600", "700", "800"] });
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

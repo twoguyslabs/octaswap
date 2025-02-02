@@ -1,6 +1,6 @@
 import { Coins } from "lucide-react";
-import { ScrollArea } from "./ui/scroll-area";
-import { Button } from "./ui/button";
+import { ScrollArea } from "../../components/ui/scroll-area";
+import { Button } from "../../components/ui/button";
 import Image from "next/image";
 import ethLogo from "@/assets/eth-logo.png";
 import bnbLogo from "@/assets/bnb-logo.svg";
@@ -57,11 +57,11 @@ export default function TokenList() {
                 <Image
                   src={token.logo}
                   alt="OCS Logo"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   quality={100}
                   priority
-                  className="h-8 w-8"
+                  className="h-9 w-9"
                 />
                 <div className="flex flex-col items-start">
                   <span className="text-lg font-bold">{token.symbol}</span>

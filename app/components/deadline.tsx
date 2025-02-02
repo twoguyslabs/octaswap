@@ -4,8 +4,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
-import { Input } from "./ui/input";
+} from "../../components/ui/tooltip";
+import { Input } from "../../components/ui/input";
 
 export default function Deadline() {
   return (

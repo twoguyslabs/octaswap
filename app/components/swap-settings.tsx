@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../../components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Slippage from "./slippage";
 import Deadline from "./deadline";

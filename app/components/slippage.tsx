@@ -4,9 +4,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
-import { Toggle } from "./ui/toggle";
-import { Input } from "./ui/input";
+} from "../../components/ui/tooltip";
+import { Toggle } from "../../components/ui/toggle";
+import { Input } from "../../components/ui/input";
 
 export default function Slippage() {
   return (

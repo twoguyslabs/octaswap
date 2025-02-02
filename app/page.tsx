@@ -1,8 +1,8 @@
 "use client";
 
-import SwapInput from "@/components/swap-input";
-import SwapSettings from "@/components/swap-settings";
-import SwapTokenPlace from "@/components/swap-token-place";
+import SwapInput from "@/app/components/swap-input";
+import SwapSettings from "@/app/components/swap-settings";
+import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
@@ -10,6 +10,18 @@ import dynamic from "next/dynamic";
 const Swap = dynamic(
   () =>
     Promise.resolve(function Swap() {
+      const token0 = {
+        name: "Ethereum",
+        symbol: "ETH",
+        logo: "/eth-logo.png",
+      };
+
+      const token1 = {
+        name: "Binance Smart Chain",
+        symbol: "BNB",
+        logo: "/bnb-logo.svg",
+      };
+
       return (
         <main>
           <div className="mx-auto max-w-[30rem] px-4 sm:pt-10 md:px-0">
@@ -17,9 +29,9 @@ const Swap = dynamic(
               <SwapSettings />
               <Card>
                 <CardContent className="px-4 py-5">
-                  <SwapInput />
+                  <SwapInput token={token0} />
                   <SwapTokenPlace />
-                  <SwapInput />
+                  <SwapInput token={token1} />
                   <Button className="mt-5 w-full">Swap</Button>
                 </CardContent>
               </Card>

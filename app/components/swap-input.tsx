@@ -1,5 +1,5 @@
 import { BiSolidWalletAlt } from "react-icons/bi";
-import { Input } from "./ui/input";
+import { Input } from "../../components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +7,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../../components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Button } from "./ui/button";
-import ocsLogo from "@/assets/ocs-logo.svg";
+import { Button } from "../../components/ui/button";
 import Image from "next/image";
 import TokenList from "./token-list";
 
-export default function SwapInput() {
+export default function SwapInput({
+  token,
+}: {
+  token: { name: string; symbol: string; logo: string };
+}) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
@@ -37,15 +40,15 @@ export default function SwapInput() {
               className="absolute inset-y-1/2 right-4 -translate-y-1/2"
             >
               <Image
-                src={ocsLogo}
-                alt="OCS Logo"
-                width={0}
-                height={0}
+                src={token.logo}
+                alt={`${token.name} Logo`}
+                width={100}
+                height={100}
                 quality={100}
                 priority
-                className="h-6 w-6"
+                className="h-7 w-7"
               />
-              <span className="text-xl font-bold">OCS</span>
+              <span className="text-xl font-bold">{token.symbol}</span>
             </Button>
           </DialogTrigger>
           <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">

@@ -1,9 +1,7 @@
 import { BiSolidWalletAlt } from "react-icons/bi";
 import { Input } from "../../components/ui/input";
-import { Dialog } from "../../components/ui/dialog";
-import TokenList from "./token-list";
-import TokenListTrigger from "./token-list-trigger";
 import { Dispatch, SetStateAction } from "react";
+import TokenListWrapper from "./token-list-wrapper";
 
 export default function SwapInput({
   token,
@@ -27,10 +25,7 @@ export default function SwapInput({
           placeholder="0.00"
           className="h-20 pr-32 text-2xl font-bold placeholder:text-2xl md:text-2xl"
         />
-        <Dialog>
-          <TokenListTrigger token={token} />
-          <TokenList onSetToken={onSetToken} />
-        </Dialog>
+        <TokenListWrapper token={token} onSetToken={onSetToken} />
       </div>
     </div>
   );

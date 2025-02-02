@@ -9,10 +9,17 @@ import { Dispatch, SetStateAction } from "react";
 
 export default function TokenList({
   onSetToken,
+  onOpenDialog,
 }: {
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+  onOpenDialog: Dispatch<SetStateAction<boolean>>;
 }) {
   const tokens = useTokenList();
+
+  const handleClick = (token: Token) => {
+    onSetToken(token);
+    onOpenDialog(false);
+  };
 
   return (
     <DialogContent className="h-[85%] w-[90%] overflow-hidden rounded-lg pt-14">
@@ -30,7 +37,7 @@ export default function TokenList({
                   key={token.name}
                   variant="ghost"
                   className="flex w-full justify-start gap-x-3 rounded-none py-8"
-                  onClick={() => onSetToken(token)}
+                  onClick={() => handleClick(token)}
                 >
                   {token.logoURI && (
                     <>

@@ -1,12 +1,14 @@
-import { Coins } from "lucide-react";
-import { ScrollArea } from "../../components/ui/scroll-area";
-import { Button } from "../../components/ui/button";
-import Image from "next/image";
-import { DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import useTokens from "@/hooks/use-tokens";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import useTokens from "@/hooks/use-tokens";
+import useLocalTokens from "@/hooks/use-local-tokens";
+import useCustomTokens from "@/hooks/use-custom-tokens";
 import { matchQuery } from "@/lib/utils";
+import { DialogContent } from "@/components/ui/dialog";
+import { CircleHelp, Coins } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function TokenList({
   onSetToken,
@@ -18,11 +20,29 @@ export default function TokenList({
   const [searchQuery, setSearchQuery] = useState("");
 
   const tokens = useTokens();
+  const [localTokens] = useLocalTokens();
+  const customTokens = useCustomTokens(searchQuery);
 
-  const filteredTokens = useMemo(
-    () => tokens?.filter((token) => matchQuery(token, searchQuery)),
-    [searchQuery, tokens],
-  );
+  const mergedTokens = useMemo(() => {
+    if (tokens && localTokens) return [...tokens, ...localTokens];
+    return [];
+  }, [tokens, localTokens]);
+
+  const tokenList = useMemo(() => {
+    if (mergedTokens.length === 0) {
+      return searchQuery ? customTokens : [];
+    }
+
+    const filteredTokens = mergedTokens.filter((token: Token) =>
+      matchQuery(token, searchQuery),
+    );
+
+    if (searchQuery) {
+      return filteredTokens.length > 0 ? filteredTokens : customTokens;
+    }
+
+    return mergedTokens;
+  }, [searchQuery, mergedTokens, customTokens]);
 
   const handleClick = (token: Token) => {
     onSetToken(token);
@@ -45,14 +65,14 @@ export default function TokenList({
           </div>
           <div className="grid">
             <ScrollArea className="h-[95%] pr-2.5">
-              {filteredTokens?.map((token) => (
+              {tokenList?.map((token) => (
                 <Button
                   key={token.name}
                   variant="ghost"
                   className="flex w-full justify-start gap-x-3 rounded-none py-8"
                   onClick={() => handleClick(token)}
                 >
-                  {token.logoURI && (
+                  {token.logoURI ? (
                     <>
                       <Image
                         src={token.logoURI}
@@ -63,6 +83,18 @@ export default function TokenList({
                         priority
                         className="h-8 w-8"
                       />
+                      <div className="flex flex-col items-start">
+                        <span className="text-lg font-bold">
+                          {token.symbol}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {token.name}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <CircleHelp style={{ width: "2rem", height: "2rem" }} />
                       <div className="flex flex-col items-start">
                         <span className="text-lg font-bold">
                           {token.symbol}

@@ -11,17 +11,19 @@ const Swap = dynamic(
   () =>
     Promise.resolve(function Swap() {
       return (
-        <main className="px-4">
-          <div className="space-y-2">
-            <SwapSettings />
-            <Card>
-              <CardContent className="px-4 py-5">
-                <SwapInput />
-                <SwapTokenPlace />
-                <SwapInput />
-                <Button className="mt-5 w-full">Swap</Button>
-              </CardContent>
-            </Card>
+        <main>
+          <div className="mx-auto max-w-[30rem] px-4 sm:pt-10 md:px-0">
+            <div className="space-y-2">
+              <SwapSettings />
+              <Card>
+                <CardContent className="px-4 py-5">
+                  <SwapInput />
+                  <SwapTokenPlace />
+                  <SwapInput />
+                  <Button className="mt-5 w-full">Swap</Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </main>
       );

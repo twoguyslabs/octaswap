@@ -12,7 +12,7 @@ export default function SwapTokenPlace() {
   };
   return (
     <div className="relative">
-      <Separator orientation="horizontal" className="my-10" />
+      <Separator orientation="horizontal" className="mb-9 mt-14" />
       <div className="absolute inset-0 flex items-center justify-center">
         <Button variant="outline" size="icon" onClick={toggleRotation}>
           <RefreshCcw

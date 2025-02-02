@@ -1,7 +1,7 @@
-import { BiSolidWalletAlt } from "react-icons/bi";
 import { Input } from "../../components/ui/input";
 import { Dispatch, SetStateAction } from "react";
 import TokenListWrapper from "./token-list-wrapper";
+import SwapBalance from "./swap-balance";
 
 export default function SwapInput({
   token,
@@ -14,10 +14,7 @@ export default function SwapInput({
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
         <div>From</div>
-        <div className="flex items-center gap-x-1">
-          <div>0</div>
-          <BiSolidWalletAlt size={15} />
-        </div>
+        <SwapBalance token={token} />
       </div>
       <div className="relative">
         <Input

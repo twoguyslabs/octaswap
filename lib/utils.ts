@@ -12,3 +12,9 @@ export function generateBreadcrumbs(pathname: string) {
     return { href, label: path.charAt(0).toUpperCase() + path.slice(1) };
   });
 }
+
+export function hasDecimal(num: number | string): boolean {
+  return typeof num === "number"
+    ? num.toString().includes(".")
+    : num.toString().includes(".");
+}

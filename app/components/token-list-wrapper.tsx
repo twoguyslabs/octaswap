@@ -6,9 +6,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 export default function TokenListWrapper({
   token,
   onSetToken,
+  elementRef,
 }: {
   token: Token | undefined;
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+  elementRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +22,7 @@ export default function TokenListWrapper({
 
   return (
     <Dialog open={openDialog} onOpenChange={(state) => handleOpenChange(state)}>
-      <TokenListTrigger token={token} />
+      <TokenListTrigger token={token} elementRef={elementRef} />
       <TokenList
         searchQuery={searchQuery}
         onSearchQuery={setSearchQuery}

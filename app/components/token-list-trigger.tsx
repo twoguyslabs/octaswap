@@ -5,12 +5,15 @@ import Image from "next/image";
 
 export default function TokenListTrigger({
   token,
+  elementRef,
 }: {
   token: Token | undefined;
+  elementRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <DialogTrigger asChild>
       <Button
+        ref={elementRef}
         variant="outline"
         className="absolute inset-y-1/2 right-4 -translate-y-1/2 px-2"
       >

@@ -37,5 +37,8 @@ export default function useSwapRate(
     },
   });
 
-  return { getAmountsOut, getAmountsIn };
+  const amountsOut = getAmountsOut?.[1];
+  const amountsIn = getAmountsIn?.[0];
+
+  return { getAmountsOut: amountsOut, getAmountsIn: amountsIn };
 }

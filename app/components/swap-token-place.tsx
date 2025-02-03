@@ -9,11 +9,13 @@ export default function SwapTokenPlace({
   token1,
   onSetToken0,
   onSetToken1,
+  onSwapAmountValue,
 }: {
   token0: Token | undefined;
   token1: Token | undefined;
   onSetToken0: Dispatch<SetStateAction<Token | undefined>>;
   onSetToken1: Dispatch<SetStateAction<Token | undefined>>;
+  onSwapAmountValue: () => void;
 }) {
   const swapTokenPlace = () => {
     onSetToken0(token1);
@@ -26,6 +28,7 @@ export default function SwapTokenPlace({
   const onClick = () => {
     swapTokenPlace();
     toggleRotation();
+    onSwapAmountValue();
   };
   return (
     <div className="relative">

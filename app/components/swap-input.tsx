@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { useDebounce } from "ahooks";
 import { formatUnits } from "viem";
 
 export default function SwapInput({
@@ -13,9 +12,7 @@ export default function SwapInput({
   rateAmounts: bigint | undefined;
   elementWidth: number;
 }) {
-  const debouncedRate = useDebounce(rateAmounts, { wait: 300 });
-
-  const rate = debouncedRate ? formatUnits(debouncedRate, 18) : "";
+  const rate = rateAmounts ? formatUnits(rateAmounts, 18) : "";
   const value = amount || rate;
 
   const paddingRight = elementWidth + 37;

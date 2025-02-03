@@ -16,7 +16,7 @@ const Swap = dynamic(
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const { amount, setAmount0, setAmount1 } = useAmount();
+      const { amount, setAmount0, setAmount1, swapAmountValue } = useAmount();
 
       const { getAmountsOut, getAmountsIn } = useSwapRate(
         token0,
@@ -44,6 +44,7 @@ const Swap = dynamic(
                     token1={token1}
                     onSetToken0={setToken0}
                     onSetToken1={setToken1}
+                    onSwapAmountValue={swapAmountValue}
                   />
                   <SwapBox
                     token={token1}

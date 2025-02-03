@@ -22,7 +22,6 @@ export default function useSwapRate(
     args: [parseUnits(amount0, 18), [token0Address, token1Address]],
     query: {
       enabled: !!amount0,
-      refetchInterval: 1000,
     },
   });
 
@@ -33,7 +32,6 @@ export default function useSwapRate(
     args: [parseUnits(amount1, 18), [token0Address, token1Address]],
     query: {
       enabled: !!amount1,
-      refetchInterval: 1000,
     },
   });
 

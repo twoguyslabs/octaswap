@@ -7,6 +7,10 @@ interface Token {
   logoURI: string;
 }
 
+interface TokenListIndex {
+  [chainId: number]: Token[];
+}
+
 interface Native {
   [chainId: number]: Token;
 }

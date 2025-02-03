@@ -5,7 +5,7 @@ import useChainId from "./use-chain-id";
 
 export default function useCustomTokens(address: string) {
   const chainId = useChainId();
-  const [customTokens, setCustomTokens] = useState<Token[]>();
+  const [customTokens, setCustomTokens] = useState<Token[]>([]);
 
   const hexAddress = address as `0x${string}`;
 
@@ -33,11 +33,7 @@ export default function useCustomTokens(address: string) {
         setCustomTokens([
           { chainId, address, name, symbol, decimals, logoURI: "" },
         ]);
-      } else {
-        setCustomTokens([]);
       }
-    } else {
-      setCustomTokens([]);
     }
   }, [chainId, address, name, symbol, decimals]);
 

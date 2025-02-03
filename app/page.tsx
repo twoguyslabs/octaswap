@@ -5,9 +5,9 @@ import SwapSettings from "@/app/components/swap-settings";
 import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import useAmount from "@/hooks/use-amount";
 import useToken from "@/hooks/use-token";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 
 const Swap = dynamic(
   () =>
@@ -15,8 +15,7 @@ const Swap = dynamic(
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const [amount0, setAmount0] = useState("");
-      const [amount1, setAmount1] = useState("");
+      const { amount, setAmount0, setAmount1 } = useAmount();
 
       return (
         <main>
@@ -28,7 +27,7 @@ const Swap = dynamic(
                   <SwapInput
                     token={token0}
                     onSetToken={setToken0}
-                    amount={amount0}
+                    amount={amount.amount0}
                     onSetAmount={setAmount0}
                   />
                   <SwapTokenPlace
@@ -40,7 +39,7 @@ const Swap = dynamic(
                   <SwapInput
                     token={token1}
                     onSetToken={setToken1}
-                    amount={amount1}
+                    amount={amount.amount1}
                     onSetAmount={setAmount1}
                   />
                   <Button className="mt-5 w-full">Swap</Button>

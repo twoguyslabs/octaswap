@@ -12,7 +12,7 @@ export default function SwapInput({
   token: Token | undefined;
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
   amount: string;
-  onSetAmount: Dispatch<SetStateAction<string>>;
+  onSetAmount: (value: string) => void;
 }) {
   return (
     <div className="space-y-4">

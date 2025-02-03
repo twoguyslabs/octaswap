@@ -2,12 +2,10 @@ import { Settings } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Slippage from "./slippage";
 import Deadline from "./deadline";
 
@@ -24,12 +22,10 @@ export default function SwapSettings() {
       <DialogContent
         className="w-[90%] max-w-md rounded-lg"
         onOpenAutoFocus={(e) => e.preventDefault()}
+        aria-describedby={undefined}
       >
         <DialogHeader className="py-4">
           <DialogTitle>Swap Settings</DialogTitle>
-          <VisuallyHidden>
-            <DialogDescription className="hidden"></DialogDescription>
-          </VisuallyHidden>
         </DialogHeader>
         <Slippage />
         <Deadline />

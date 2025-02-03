@@ -35,9 +35,13 @@ export default function TokenList({
   const tokenList = useMemo(() => {
     if (!customTokens) return;
 
-    const filteredTokens = mergedTokens.filter((token: Token) =>
-      matchQuery(token, searchQuery),
-    );
+    const filteredTokens = mergedTokens
+      .filter((token: Token) => matchQuery(token, searchQuery))
+      .sort((a, b) => {
+        if (a.address === null) return -1;
+        if (b.address === null) return 1;
+        return a.symbol.localeCompare(b.symbol);
+      });
 
     return filteredTokens.length > 0 ? filteredTokens : customTokens;
   }, [searchQuery, mergedTokens, customTokens]);

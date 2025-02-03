@@ -11,6 +11,10 @@ interface TokenListIndex {
   [chainId: number]: Token[];
 }
 
-interface Native {
-  [chainId: number]: Token;
+interface Native extends Token {
+  wrapped: string;
+}
+
+interface NativeData {
+  [chainId: number]: Native;
 }

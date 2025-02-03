@@ -41,3 +41,7 @@ export function getAddress(token: Token | Native | undefined): `0x${string}` {
       ? (token.address as `0x${string}`)
       : ("" as `0x${string}`);
 }
+
+export function formatStringAmount(amount: string) {
+  return hasDecimal(amount) ? Number(amount).toFixed(4) : amount;
+}

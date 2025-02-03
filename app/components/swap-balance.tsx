@@ -1,5 +1,5 @@
 import useTokenBalance from "@/hooks/use-token-balance";
-import { hasDecimal } from "@/lib/utils";
+import { formatStringAmount } from "@/lib/utils";
 import { BiSolidWalletAlt } from "react-icons/bi";
 import { formatUnits } from "viem";
 
@@ -12,9 +12,7 @@ export default function SwapBalance({
 }) {
   const balance = useTokenBalance(token);
   const stringBalance = balance ? formatUnits(balance, 18) : "0";
-  const formattedBalance = hasDecimal(stringBalance)
-    ? Number(stringBalance).toFixed(4)
-    : stringBalance;
+  const formattedBalance = formatStringAmount(stringBalance);
 
   return (
     <button

@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { formatStringAmount } from "@/lib/utils";
 import { formatUnits } from "viem";
 
 export default function SwapInput({
@@ -13,9 +14,12 @@ export default function SwapInput({
   elementWidth: number;
 }) {
   const rate = rateAmounts ? formatUnits(rateAmounts, 18) : "";
-  const value = amount || rate;
+  const formattedRate = formatStringAmount(rate);
+
+  const value = amount || formattedRate;
 
   const paddingRight = elementWidth + 37;
+
   return (
     <Input
       style={{ paddingRight: `${paddingRight}px` }}

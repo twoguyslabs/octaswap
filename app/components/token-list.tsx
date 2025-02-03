@@ -4,11 +4,13 @@ import useTokens from "@/hooks/use-tokens";
 import useLocalTokens from "@/hooks/use-local-tokens";
 import useCustomTokens from "@/hooks/use-custom-tokens";
 import { hasToken, matchQuery } from "@/lib/utils";
-import { DialogContent } from "@/components/ui/dialog";
+import { DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { CircleHelp, Coins } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export default function TokenList({
   onSetToken,
@@ -48,7 +50,15 @@ export default function TokenList({
   };
 
   return (
-    <DialogContent className="h-fit w-[90%] overflow-hidden rounded-lg pt-14">
+    <DialogContent
+      className="h-fit w-[90%] overflow-hidden rounded-lg pt-14"
+      aria-describedby={undefined}
+    >
+      <DialogHeader className="hidden">
+        <VisuallyHidden>
+          <DialogTitle></DialogTitle>
+        </VisuallyHidden>
+      </DialogHeader>
       <div className="space-y-5">
         <Input
           type="text"

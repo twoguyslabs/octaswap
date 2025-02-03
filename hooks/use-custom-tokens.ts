@@ -33,7 +33,11 @@ export default function useCustomTokens(address: string) {
         setCustomTokens([
           { chainId, address, name, symbol, decimals, logoURI: "" },
         ]);
+      } else {
+        setCustomTokens([]);
       }
+    } else {
+      setCustomTokens([]);
     }
   }, [chainId, address, name, symbol, decimals]);
 

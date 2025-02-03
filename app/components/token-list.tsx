@@ -22,7 +22,7 @@ export default function TokenList({
   const [searchQuery, setSearchQuery] = useState("");
 
   const tokens = useTokens();
-  const [localTokens, setLocalTokens] = useLocalTokens();
+  const { localTokens, setLocalTokens } = useLocalTokens();
   const customTokens = useCustomTokens(searchQuery);
 
   const mergedTokens = useMemo(() => {
@@ -42,7 +42,7 @@ export default function TokenList({
 
   const handleClick = (token: Token) => {
     if (!hasToken(token, mergedTokens)) {
-      setLocalTokens([token]);
+      setLocalTokens(token);
     }
 
     onSetToken(token);

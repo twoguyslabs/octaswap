@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import useTokens from "@/hooks/use-tokens";
 import useLocalTokens from "@/hooks/use-local-tokens";
 import useCustomTokens from "@/hooks/use-custom-tokens";
@@ -13,14 +13,16 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 export default function TokenList({
+  searchQuery,
+  onSearchQuery,
   onSetToken,
   onOpenDialog,
 }: {
+  searchQuery: string;
+  onSearchQuery: Dispatch<SetStateAction<string>>;
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
   onOpenDialog: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [searchQuery, setSearchQuery] = useState("");
-
   const tokens = useTokens();
   const { localTokens, setLocalTokens } = useLocalTokens();
   const customTokens = useCustomTokens(searchQuery);
@@ -64,7 +66,7 @@ export default function TokenList({
           type="text"
           placeholder="Search tokens"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => onSearchQuery(e.target.value)}
         />
         <div className="space-y-4">
           <div className="flex items-center gap-x-2">

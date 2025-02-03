@@ -11,11 +11,22 @@ export default function TokenListWrapper({
   onSetToken: Dispatch<SetStateAction<Token | undefined>>;
 }) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleOpenChange = (state: boolean) => {
+    setOpenDialog(state);
+    setSearchQuery("");
+  };
 
   return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+    <Dialog open={openDialog} onOpenChange={(state) => handleOpenChange(state)}>
       <TokenListTrigger token={token} />
-      <TokenList onSetToken={onSetToken} onOpenDialog={setOpenDialog} />
+      <TokenList
+        searchQuery={searchQuery}
+        onSearchQuery={setSearchQuery}
+        onSetToken={onSetToken}
+        onOpenDialog={setOpenDialog}
+      />
     </Dialog>
   );
 }

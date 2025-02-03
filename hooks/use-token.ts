@@ -9,6 +9,8 @@ export default function useToken({ useNative }: { useNative: boolean }) {
   useEffect(() => {
     if (useNative) {
       setToken(native(chainId));
+    } else {
+      setToken(undefined);
     }
   }, [useNative, chainId]);
 

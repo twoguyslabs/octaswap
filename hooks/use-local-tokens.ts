@@ -1,6 +1,5 @@
 import { useLocalStorageState } from "ahooks";
 import useChainId from "./use-chain-id";
-import { useEffect, useMemo } from "react";
 
 export default function useLocalTokens() {
   const chainId = useChainId();
@@ -12,9 +11,7 @@ export default function useLocalTokens() {
     },
   ) as [TokenListIndex, (value: TokenListIndex) => void];
 
-  const localTokensByChainId = useMemo(() => {
-    return chainId ? localTokens[chainId] || [] : [];
-  }, [chainId, localTokens]);
+  const localTokensByChainId = chainId ? localTokens[chainId] || [] : [];
 
   const setLocalTokensByChainId = (token: Token) => {
     if (!chainId) return;
@@ -26,11 +23,6 @@ export default function useLocalTokens() {
       [chainId]: updatedTokens,
     });
   };
-
-  useEffect(() => {
-    console.log("localTokens", localTokens);
-    console.log("localTokensByChainId", localTokensByChainId);
-  }, [localTokens, localTokensByChainId]);
 
   return {
     localTokens: localTokensByChainId,

@@ -31,3 +31,13 @@ export function matchQuery(token: Token | undefined, query: string) {
 export function hasToken(token: Token, tokens: Token[]) {
   return tokens.some((t) => t.address === token.address);
 }
+
+export function getAddress(token: Token | Native | undefined): `0x${string}` {
+  if (!token) return "" as `0x${string}`;
+
+  return "wrapped" in token
+    ? (token.wrapped as `0x${string}`)
+    : token.address
+      ? (token.address as `0x${string}`)
+      : ("" as `0x${string}`);
+}

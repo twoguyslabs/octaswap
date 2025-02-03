@@ -4,7 +4,7 @@ import { native } from "@/constants/native";
 
 export default function useToken({ useNative }: { useNative: boolean }) {
   const chainId = useChainId();
-  const [token, setToken] = useState<Token | undefined>();
+  const [token, setToken] = useState<Token | Native | undefined>();
 
   useEffect(() => {
     if (useNative) {

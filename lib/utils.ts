@@ -13,12 +13,6 @@ export function generateBreadcrumbs(pathname: string) {
   });
 }
 
-export function hasDecimal(num: number | string): boolean {
-  return typeof num === "number"
-    ? num.toString().includes(".")
-    : num.includes(".");
-}
-
 export function matchQuery(token: Token | undefined, query: string) {
   const lowerCaseQuery = query.toLowerCase();
   return (
@@ -43,5 +37,6 @@ export function getAddress(token: Token | Native | undefined): `0x${string}` {
 }
 
 export function formatStringAmount(amount: string) {
-  return hasDecimal(amount) ? Number(amount).toFixed(4) : amount;
+  const num = Number(amount);
+  return num > 1 ? num.toFixed(4) : amount;
 }

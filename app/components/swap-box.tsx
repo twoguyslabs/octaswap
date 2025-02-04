@@ -11,8 +11,8 @@ export default function SwapBox({
   onSetAmount,
   rateAmounts,
 }: {
-  token: Token | undefined;
-  onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+  token: UnionToken;
+  onSetToken: Dispatch<SetStateAction<UnionToken>>;
   amount: string;
   onSetAmount: (value: string) => void;
   rateAmounts: bigint | undefined;
@@ -27,7 +27,11 @@ export default function SwapBox({
       </div>
       <div className="relative">
         <SwapInput amount={amount} onSetAmount={onSetAmount} rateAmounts={rateAmounts} elementWidth={elementWidth} />
-        <TokenListWrapper token={token} onSetToken={onSetToken} elementRef={elementRef as React.RefObject<HTMLButtonElement | null>} />
+        <TokenListWrapper
+          token={token}
+          onSetToken={onSetToken}
+          elementRef={elementRef as React.RefObject<HTMLButtonElement | null>}
+        />
       </div>
     </div>
   );

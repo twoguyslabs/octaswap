@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useChainId from "./use-chain-id";
-import { native } from "@/constants/native";
+import { NATIVE } from "@/constants/native";
+import { mockToken } from "@/lib/utils";
 
 export default function useToken({ useNative }: { useNative: boolean }) {
   const chainId = useChainId();
-  const [token, setToken] = useState<Token | Native | undefined>();
+
+  const defaultToken = useMemo(() => {
+    return useNative ? NATIVE[chainId] : mockToken();
+  }, [chainId, useNative]);
+
+  const [token, setToken] = useState<UnionToken>(defaultToken);
 
   useEffect(() => {
-    if (useNative) {
-      setToken(native(chainId));
-    } else {
-      setToken(undefined);
-    }
-  }, [useNative, chainId]);
+    setToken(defaultToken);
+  }, [defaultToken]);
 
   return [token, setToken] as const;
 }

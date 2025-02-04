@@ -8,8 +8,8 @@ export default function TokenListWrapper({
   onSetToken,
   elementRef,
 }: {
-  token: Token | undefined;
-  onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+  token: UnionToken;
+  onSetToken: Dispatch<SetStateAction<UnionToken>>;
   elementRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   const [openDialog, setOpenDialog] = useState(false);

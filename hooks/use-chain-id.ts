@@ -5,11 +5,13 @@ export default function useChainId() {
   const offlineChainId = useWagmiChainId();
   const { isConnected, chainId: onlineChainId } = useAccount();
 
-  const [chainId, setChainId] = useState<number | undefined>(offlineChainId);
+  const [chainId, setChainId] = useState<number>(offlineChainId);
 
   useEffect(() => {
     if (isConnected) {
-      setChainId(onlineChainId);
+      if (onlineChainId) {
+        setChainId(onlineChainId);
+      }
     } else {
       setChainId(offlineChainId);
     }

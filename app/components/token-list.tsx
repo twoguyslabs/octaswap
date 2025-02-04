@@ -20,7 +20,7 @@ export default function TokenList({
 }: {
   searchQuery: string;
   onSearchQuery: Dispatch<SetStateAction<string>>;
-  onSetToken: Dispatch<SetStateAction<Token | undefined>>;
+  onSetToken: Dispatch<SetStateAction<UnionToken>>;
   onOpenDialog: Dispatch<SetStateAction<boolean>>;
 }) {
   const tokens = useTokens();
@@ -28,15 +28,12 @@ export default function TokenList({
   const customTokens = useCustomTokens(searchQuery);
 
   const mergedTokens = useMemo(() => {
-    if (tokens && localTokens) return [...tokens, ...localTokens];
-    return [];
+    return [...tokens, ...localTokens];
   }, [tokens, localTokens]);
 
   const tokenList = useMemo(() => {
-    if (!customTokens) return;
-
     const filteredTokens = mergedTokens
-      .filter((token: Token) => matchQuery(token, searchQuery))
+      .filter((token: UnionToken) => matchQuery(token, searchQuery))
       .sort((a, b) => {
         if (a.address === null) return -1;
         if (b.address === null) return 1;
@@ -46,7 +43,7 @@ export default function TokenList({
     return filteredTokens.length > 0 ? filteredTokens : customTokens;
   }, [searchQuery, mergedTokens, customTokens]);
 
-  const handleClick = (token: Token) => {
+  const handleClick = (token: UnionToken) => {
     if (!hasToken(token, mergedTokens)) {
       setLocalTokens(token);
     }
@@ -56,10 +53,7 @@ export default function TokenList({
   };
 
   return (
-    <DialogContent
-      className="h-fit w-[90%] overflow-hidden rounded-lg pt-14"
-      aria-describedby={undefined}
-    >
+    <DialogContent className="h-fit w-[90%] overflow-hidden rounded-lg pt-14" aria-describedby={undefined}>
       <DialogHeader className="hidden">
         <VisuallyHidden>
           <DialogTitle></DialogTitle>
@@ -98,24 +92,16 @@ export default function TokenList({
                         className="h-8 w-8"
                       />
                       <div className="flex flex-col items-start">
-                        <span className="text-lg font-bold">
-                          {token.symbol}
-                        </span>
-                        <span className="text-muted-foreground">
-                          {token.name}
-                        </span>
+                        <span className="text-lg font-bold">{token.symbol}</span>
+                        <span className="text-muted-foreground">{token.name}</span>
                       </div>
                     </>
                   ) : (
                     <>
                       <CircleHelp style={{ width: "2rem", height: "2rem" }} />
                       <div className="flex flex-col items-start">
-                        <span className="text-lg font-bold">
-                          {token.symbol}
-                        </span>
-                        <span className="text-muted-foreground">
-                          {token.name}
-                        </span>
+                        <span className="text-lg font-bold">{token.symbol}</span>
+                        <span className="text-muted-foreground">{token.name}</span>
                       </div>
                     </>
                   )}

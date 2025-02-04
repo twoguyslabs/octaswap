@@ -1,14 +1,14 @@
-import { native } from "@/constants/native";
+import { NATIVE } from "@/constants/native";
 import { getTokenListUrl } from "@/lib/get-token-list-url";
 import { useEffect, useState } from "react";
 import { useChainId } from "wagmi";
 
 export default function useTokens() {
   const chainId = useChainId();
-  const [tokens, setTokens] = useState<Token[]>([]);
+  const [tokens, setTokens] = useState<UnionToken[]>([]);
 
   useEffect(() => {
-    const nativeToken = native(chainId);
+    const nativeToken = NATIVE[chainId];
     const tokenListUrl = getTokenListUrl(chainId);
 
     if (tokenListUrl) {

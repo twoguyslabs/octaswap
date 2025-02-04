@@ -4,18 +4,13 @@ import useChainId from "./use-chain-id";
 export default function useLocalTokens() {
   const chainId = useChainId();
 
-  const [localTokens, setLocalTokens] = useLocalStorageState<TokenListIndex>(
-    "localTokens",
-    {
-      defaultValue: {},
-    },
-  ) as [TokenListIndex, (value: TokenListIndex) => void];
+  const [localTokens, setLocalTokens] = useLocalStorageState<{ [chainId: number]: UnionToken[] }>("localTokens", {
+    defaultValue: {},
+  }) as [{ [chainId: number]: UnionToken[] }, (value: { [chainId: number]: UnionToken[] }) => void];
 
-  const localTokensByChainId = chainId ? localTokens[chainId] || [] : [];
+  const localTokensByChainId = localTokens[chainId] || [];
 
-  const setLocalTokensByChainId = (token: Token) => {
-    if (!chainId) return;
-
+  const setLocalTokensByChainId = (token: UnionToken) => {
     const updatedTokens = [...localTokensByChainId, token];
 
     setLocalTokens({

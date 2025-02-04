@@ -11,10 +11,10 @@ export default function SwapTokenPlace({
   onSetToken1,
   onSwapAmountValue,
 }: {
-  token0: Token | undefined;
-  token1: Token | undefined;
-  onSetToken0: Dispatch<SetStateAction<Token | undefined>>;
-  onSetToken1: Dispatch<SetStateAction<Token | undefined>>;
+  token0: Token;
+  token1: Token;
+  onSetToken0: Dispatch<SetStateAction<Token>>;
+  onSetToken1: Dispatch<SetStateAction<Token>>;
   onSwapAmountValue: () => void;
 }) {
   const swapTokenPlace = () => {
@@ -35,12 +35,7 @@ export default function SwapTokenPlace({
       <Separator orientation="horizontal" className="mb-9 mt-14" />
       <div className="absolute inset-0 flex items-center justify-center">
         <Button variant="outline" size="icon" onClick={() => onClick()}>
-          <RefreshCcw
-            className={cn(
-              "transform transition duration-300 ease-in-out",
-              isRotated ? "rotate-180" : "",
-            )}
-          />
+          <RefreshCcw className={cn("transform transition duration-300 ease-in-out", isRotated ? "rotate-180" : "")} />
         </Button>
       </div>
     </div>

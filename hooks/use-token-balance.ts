@@ -1,29 +1,29 @@
 import { erc20Abi } from "viem";
-import { useAccount, useBalance, useReadContract } from "wagmi";
+import { useBalance, useReadContract } from "wagmi";
+import useAddress from "./use-address";
 
-export default function useTokenBalance(token: Token | undefined) {
-  const isNullAddress = token?.address === null;
-
-  const { address } = useAccount();
+export default function useTokenBalance(token: UnionToken) {
+  const address = useAddress();
+  const isNative = token.isNative ? true : false;
 
   const { data: nativeBalance } = useBalance({
     address,
     query: {
-      enabled: !!address && isNullAddress,
+      refetchInterval: 1000,
     },
   });
 
   const { data: tokenBalance } = useReadContract({
     abi: erc20Abi,
-    address: token?.address as `0x${string}`,
+    address: token.address,
     functionName: "balanceOf",
-    args: [address!],
+    args: [address],
     query: {
-      enabled: !!address && !isNullAddress,
+      refetchInterval: 1000,
     },
   });
 
-  const balance = isNullAddress ? nativeBalance?.value : tokenBalance;
+  const balance = isNative ? nativeBalance?.value : tokenBalance;
 
   return balance;
 }

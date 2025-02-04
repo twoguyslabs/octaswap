@@ -5,17 +5,11 @@ import SwapSettings from "@/app/components/swap-settings";
 import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { OCTA_V2_ROUTER_ABI, OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
-import useAddress from "@/hooks/use-address";
 import useAllowance from "@/hooks/use-allowance";
 import useAmount from "@/hooks/use-amount";
-import useCreatePair from "@/hooks/use-pair";
 import useSwapRate from "@/hooks/use-swap-rate";
 import useToken from "@/hooks/use-token";
-import { getTokenAddress } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { erc20Abi, parseEther } from "viem";
-import { useSimulateContract, useWriteContract } from "wagmi";
 
 const Swap = dynamic(
   () =>
@@ -26,43 +20,7 @@ const Swap = dynamic(
       const { amount, setAmount0, setAmount1, swapAmountValue } = useAmount();
 
       const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
-
       const { isAllowance: isToken0Allowance } = useAllowance(token0, amount.amount0);
-
-      const address = useAddress();
-
-      const token0Address = getTokenAddress(token0);
-      const token1Address = getTokenAddress(token1);
-
-      const { data: approveData } = useSimulateContract({
-        address: token0Address,
-        abi: erc20Abi,
-        functionName: "approve",
-        args: [OCTA_V2_ROUTER_ADDRESS, parseEther(amount.amount0)],
-      });
-
-      const { writeContract: approve } = useWriteContract();
-
-      const { data: swapExactETHForTokensData } = useSimulateContract({
-        address: OCTA_V2_ROUTER_ADDRESS,
-        abi: OCTA_V2_ROUTER_ABI,
-        functionName: "swapExactETHForTokens",
-        args: [BigInt(0), [token0Address, token1Address], address, BigInt(Math.floor(Date.now() / 1000) + 5 * 60)],
-        value: parseEther(amount.amount0),
-      });
-
-      const { data: swapExactTokensForETHData } = useSimulateContract({
-        address: OCTA_V2_ROUTER_ADDRESS,
-        abi: OCTA_V2_ROUTER_ABI,
-        functionName: "swapExactTokensForETH",
-        args: [parseEther(amount.amount0), BigInt(0), [token0Address, token1Address], address, BigInt(Math.floor(Date.now() / 1000) + 5 * 60)],
-      });
-
-      const swapData = swapExactETHForTokensData || swapExactTokensForETHData;
-
-      const { writeContract: swap } = useWriteContract();
-
-      const pair = useCreatePair(token0, token1);
 
       return (
         <main>
@@ -71,20 +29,28 @@ const Swap = dynamic(
               <SwapSettings />
               <Card>
                 <CardContent className="px-4 py-5">
-                  <SwapBox token={token0} onSetToken={setToken0} amount={amount.amount0} onSetAmount={setAmount0} rateAmounts={getAmountsIn} />
-                  <SwapTokenPlace token0={token0} token1={token1} onSetToken0={setToken0} onSetToken1={setToken1} onSwapAmountValue={swapAmountValue} />
-                  <SwapBox token={token1} onSetToken={setToken1} amount={amount.amount1} onSetAmount={setAmount1} rateAmounts={getAmountsOut} />
-                  <Button
-                    className="mt-5 w-full"
-                    onClick={() =>
-                      isToken0Allowance
-                        ? // @ts-expect-error gajelas kontol
-                          swap(swapData!.request)
-                        : approve(approveData!.request)
-                    }
-                  >
-                    {isToken0Allowance ? "Swap" : "Approve"}
-                  </Button>
+                  <SwapBox
+                    token={token0}
+                    onSetToken={setToken0}
+                    amount={amount.amount0}
+                    onSetAmount={setAmount0}
+                    rateAmounts={getAmountsIn}
+                  />
+                  <SwapTokenPlace
+                    token0={token0}
+                    token1={token1}
+                    onSetToken0={setToken0}
+                    onSetToken1={setToken1}
+                    onSwapAmountValue={swapAmountValue}
+                  />
+                  <SwapBox
+                    token={token1}
+                    onSetToken={setToken1}
+                    amount={amount.amount1}
+                    onSetAmount={setAmount1}
+                    rateAmounts={getAmountsOut}
+                  />
+                  <Button className="mt-5 w-full">{isToken0Allowance ? "Swap" : "Approve"}</Button>
                 </CardContent>
               </Card>
             </div>

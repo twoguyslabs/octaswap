@@ -1,26 +1,25 @@
-import { getTokenAddress } from "@/lib/utils";
 import useAddress from "./use-address";
 import { useReadContract } from "wagmi";
-import { erc20Abi, parseUnits } from "viem";
+import { erc20Abi, parseEther } from "viem";
 import { OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
 
-export default function useAllowance(token: Token | Native | undefined, amount: string) {
+export default function useAllowance(token: UnionToken, amount: string) {
   const address = useAddress();
-  const tokenAddress = getTokenAddress(token);
+  const amounts = parseEther(amount);
 
-  const amt = parseUnits(amount, 18);
+  const isWrapped = token.isNative ? true : false;
 
   const { data: allowance } = useReadContract({
-    address: tokenAddress,
+    address: token.address,
     abi: erc20Abi,
     functionName: "allowance",
     args: [address, OCTA_V2_ROUTER_ADDRESS],
     query: {
-      enabled: !!token?.address,
+      refetchInterval: 1000,
     },
   });
 
-  const isAllowance = token?.address ? (allowance ? (allowance >= amt ? true : false) : false) : true;
+  const isAllowance = !isWrapped ? (allowance ? (allowance >= amounts ? true : false) : false) : true;
 
   return { allowance, isAllowance };
 }

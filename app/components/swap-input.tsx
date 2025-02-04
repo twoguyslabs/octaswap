@@ -1,13 +1,22 @@
 import { Input } from "@/components/ui/input";
 import { formatStringAmount } from "@/lib/utils";
-import { formatUnits } from "viem";
+import { formatEther } from "viem";
 
-export default function SwapInput({ amount, onSetAmount, rateAmounts, elementWidth }: { amount: string; onSetAmount: (value: string) => void; rateAmounts: bigint | undefined; elementWidth: number }) {
-  const rate = rateAmounts ? formatUnits(rateAmounts, 18) : "";
+export default function SwapInput({
+  amount,
+  onSetAmount,
+  rateAmounts,
+  elementWidth,
+}: {
+  amount: string;
+  onSetAmount: (value: string) => void;
+  rateAmounts: bigint | undefined;
+  elementWidth: number;
+}) {
+  const rate = rateAmounts ? formatEther(rateAmounts) : "";
   const formattedRate = formatStringAmount(rate);
 
   const value = amount || formattedRate;
-
   const paddingRight = elementWidth + 37;
 
   return (

@@ -7,16 +7,12 @@ export default function TokenListTrigger({
   token,
   elementRef,
 }: {
-  token: Token | undefined;
+  token: UnionToken;
   elementRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <DialogTrigger asChild>
-      <Button
-        ref={elementRef}
-        variant="outline"
-        className="absolute inset-y-1/2 right-4 -translate-y-1/2 px-2"
-      >
+      <Button ref={elementRef} variant="outline" className="absolute inset-y-1/2 right-4 -translate-y-1/2 px-2">
         {token?.chainId ? (
           token.logoURI ? (
             <>

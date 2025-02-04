@@ -26,17 +26,8 @@ export default function SwapBox({
         <SwapBalance token={token} onSetAmount={onSetAmount} />
       </div>
       <div className="relative">
-        <SwapInput
-          amount={amount}
-          onSetAmount={onSetAmount}
-          rateAmounts={rateAmounts}
-          elementWidth={elementWidth}
-        />
-        <TokenListWrapper
-          token={token}
-          onSetToken={onSetToken}
-          elementRef={elementRef as React.RefObject<HTMLButtonElement | null>}
-        />
+        <SwapInput amount={amount} onSetAmount={onSetAmount} rateAmounts={rateAmounts} elementWidth={elementWidth} />
+        <TokenListWrapper token={token} onSetToken={onSetToken} elementRef={elementRef as React.RefObject<HTMLButtonElement | null>} />
       </div>
     </div>
   );

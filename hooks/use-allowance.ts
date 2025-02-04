@@ -1,4 +1,4 @@
-import { getAddress } from "@/lib/utils";
+import { getTokenAddress } from "@/lib/utils";
 import useAddress from "./use-address";
 import { useReadContract } from "wagmi";
 import { erc20Abi, parseUnits } from "viem";
@@ -6,7 +6,7 @@ import { OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router
 
 export default function useAllowance(token: Token | Native | undefined, amount: string) {
   const address = useAddress();
-  const tokenAddress = getAddress(token);
+  const tokenAddress = getTokenAddress(token);
 
   const amt = parseUnits(amount, 18);
 

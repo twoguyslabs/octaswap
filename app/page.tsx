@@ -9,11 +9,11 @@ import { OCTA_V2_ROUTER_ABI, OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspac
 import useAddress from "@/hooks/use-address";
 import useAllowance from "@/hooks/use-allowance";
 import useAmount from "@/hooks/use-amount";
+import useCreatePair from "@/hooks/use-pair";
 import useSwapRate from "@/hooks/use-swap-rate";
 import useToken from "@/hooks/use-token";
-import { getAddress } from "@/lib/utils";
+import { getTokenAddress } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
 import { erc20Abi, parseEther } from "viem";
 import { useSimulateContract, useWriteContract } from "wagmi";
 
@@ -31,8 +31,8 @@ const Swap = dynamic(
 
       const address = useAddress();
 
-      const token0Address = getAddress(token0);
-      const token1Address = getAddress(token1);
+      const token0Address = getTokenAddress(token0);
+      const token1Address = getTokenAddress(token1);
 
       const { data: approveData } = useSimulateContract({
         address: token0Address,
@@ -62,9 +62,7 @@ const Swap = dynamic(
 
       const { writeContract: swap } = useWriteContract();
 
-      useEffect(() => {
-        console.log(swapData);
-      }, [swapData]);
+      const pair = useCreatePair(token0, token1);
 
       return (
         <main>

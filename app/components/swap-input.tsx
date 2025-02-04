@@ -2,17 +2,7 @@ import { Input } from "@/components/ui/input";
 import { formatStringAmount } from "@/lib/utils";
 import { formatUnits } from "viem";
 
-export default function SwapInput({
-  amount,
-  onSetAmount,
-  rateAmounts,
-  elementWidth,
-}: {
-  amount: string;
-  onSetAmount: (value: string) => void;
-  rateAmounts: bigint | undefined;
-  elementWidth: number;
-}) {
+export default function SwapInput({ amount, onSetAmount, rateAmounts, elementWidth }: { amount: string; onSetAmount: (value: string) => void; rateAmounts: bigint | undefined; elementWidth: number }) {
   const rate = rateAmounts ? formatUnits(rateAmounts, 18) : "";
   const formattedRate = formatStringAmount(rate);
 

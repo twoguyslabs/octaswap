@@ -11,8 +11,8 @@ export default function SwapBox({
   onSetAmount,
   rateAmounts,
 }: {
-  token: UnionToken;
-  onSetToken: Dispatch<SetStateAction<UnionToken>>;
+  token: UnionToken | undefined;
+  onSetToken: Dispatch<SetStateAction<UnionToken | undefined>>;
   amount: string;
   onSetAmount: (value: string) => void;
   rateAmounts: bigint | undefined;

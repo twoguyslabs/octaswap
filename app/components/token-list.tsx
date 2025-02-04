@@ -20,7 +20,7 @@ export default function TokenList({
 }: {
   searchQuery: string;
   onSearchQuery: Dispatch<SetStateAction<string>>;
-  onSetToken: Dispatch<SetStateAction<UnionToken>>;
+  onSetToken: Dispatch<SetStateAction<UnionToken | undefined>>;
   onOpenDialog: Dispatch<SetStateAction<boolean>>;
 }) {
   const tokens = useTokens();

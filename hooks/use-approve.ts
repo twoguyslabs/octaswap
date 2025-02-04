@@ -1,8 +1,12 @@
 import { erc20Abi, parseEther } from "viem";
 import { useSimulateContract, useWriteContract } from "wagmi";
 
-export default function useApprove(tokenAddress: `0x${string}`, spender: `0x${string}`, amount: string) {
-  const parsedAmount = parseEther(amount);
+export default function useApprove(
+  tokenAddress: `0x${string}` | undefined,
+  spender: `0x${string}`,
+  amount: string | (bigint | undefined),
+) {
+  const parsedAmount = typeof amount === "string" ? parseEther(amount) : amount || BigInt(0);
 
   const { data: simulateApprove } = useSimulateContract({
     address: tokenAddress,

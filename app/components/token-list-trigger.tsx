@@ -7,7 +7,7 @@ export default function TokenListTrigger({
   token,
   elementRef,
 }: {
-  token: UnionToken;
+  token: UnionToken | undefined;
   elementRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   return (

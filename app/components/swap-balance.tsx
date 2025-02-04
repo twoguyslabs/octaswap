@@ -7,7 +7,7 @@ export default function SwapBalance({
   token,
   onSetAmount,
 }: {
-  token: UnionToken;
+  token: UnionToken | undefined;
   onSetAmount: (value: string) => void;
 }) {
   const balance = useTokenBalance(token);

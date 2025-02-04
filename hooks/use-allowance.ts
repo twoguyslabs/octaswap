@@ -3,14 +3,14 @@ import { useReadContract } from "wagmi";
 import { erc20Abi, parseEther } from "viem";
 import { OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
 
-export default function useAllowance(token: UnionToken, amount: string) {
+export default function useAllowance(token: UnionToken | undefined, amount: string) {
   const address = useAddress();
   const amounts = parseEther(amount);
 
-  const isWrapped = token.isNative ? true : false;
+  const isWrapped = token?.isNative ? true : false;
 
   const { data: allowance } = useReadContract({
-    address: token.address,
+    address: token?.address,
     abi: erc20Abi,
     functionName: "allowance",
     args: [address, OCTA_V2_ROUTER_ADDRESS],

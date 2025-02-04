@@ -5,8 +5,10 @@ import SwapSettings from "@/app/components/swap-settings";
 import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
 import useAllowance from "@/hooks/use-allowance";
 import useAmount from "@/hooks/use-amount";
+import useApprove from "@/hooks/use-approve";
 import useSwapRate from "@/hooks/use-swap-rate";
 import useToken from "@/hooks/use-token";
 import dynamic from "next/dynamic";
@@ -21,6 +23,8 @@ const Swap = dynamic(
 
       const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
       const { isAllowance: isToken0Allowance } = useAllowance(token0, amount.amount0);
+
+      const handleApprove = useApprove(token0?.address, OCTA_V2_ROUTER_ADDRESS, amount.amount0 || getAmountsIn);
 
       return (
         <main>
@@ -50,7 +54,9 @@ const Swap = dynamic(
                     onSetAmount={setAmount1}
                     rateAmounts={getAmountsOut}
                   />
-                  <Button className="mt-5 w-full">{isToken0Allowance ? "Swap" : "Approve"}</Button>
+                  <Button className="mt-5 w-full" onClick={handleApprove}>
+                    {isToken0Allowance ? "Swap" : "Approve"}
+                  </Button>
                 </CardContent>
               </Card>
             </div>

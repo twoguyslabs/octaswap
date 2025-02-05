@@ -1,6 +1,6 @@
 import { OCTA_V2_ROUTER_ABI, OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
 import { Trade } from "@uniswap/v2-sdk";
-import { useSimulateContract, useWriteContract } from "wagmi";
+import { useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Percent, Token, TradeType } from "@uniswap/sdk-core";
 import { parseEther } from "viem";
 import useAddress from "./use-address";
@@ -98,10 +98,14 @@ export default function useSwapSimulation(
     simulateExactTokensForETH ||
     simulateETHForExactTokens;
 
-  const { writeContract } = useWriteContract();
+  const { writeContract, isPending, data: hash } = useWriteContract();
+
+  const { isLoading: isSwapConfirming, isSuccess: isSwapConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   // @ts-expect-error mixing simulation with OR
   const handleSwap = () => writeContract(simulation!.request);
 
-  return handleSwap;
+  return { handleSwap, isPending, isSwapConfirming, isSwapConfirmed };
 }

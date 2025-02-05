@@ -28,7 +28,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
         <ReownProvider cookies={cookies}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Sidebar>{children}</Sidebar>
           </ThemeProvider>
         </ReownProvider>

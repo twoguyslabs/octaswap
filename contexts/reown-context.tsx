@@ -19,9 +19,9 @@ const queryClient = new QueryClient({
 
 // Set up metadata
 const metadata = {
-  name: "appkit-example",
-  description: "AppKit Example",
-  url: "https://appkitexampleapp.com", // origin must match your domain & subdomain
+  name: "OctaSwap",
+  description: "OctaSwap - Trade. Stake. Launch",
+  url: "https://app.octaswap.io", // origin must match your domain & subdomain
   icons: ["https://avatars.githubusercontent.com/u/179229932"],
 };
 

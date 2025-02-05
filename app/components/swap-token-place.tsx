@@ -11,10 +11,10 @@ export default function SwapTokenPlace({
   onSetToken1,
   onSwapAmountValue,
 }: {
-  token0: Token;
-  token1: Token;
-  onSetToken0: Dispatch<SetStateAction<Token>>;
-  onSetToken1: Dispatch<SetStateAction<Token>>;
+  token0: UnionToken | undefined;
+  token1: UnionToken | undefined;
+  onSetToken0: Dispatch<SetStateAction<UnionToken | undefined>>;
+  onSetToken1: Dispatch<SetStateAction<UnionToken | undefined>>;
   onSwapAmountValue: () => void;
 }) {
   const swapTokenPlace = () => {

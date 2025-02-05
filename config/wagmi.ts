@@ -7,7 +7,7 @@ export const isDevelopment = process.env.NODE_ENV === "development" ? true : fal
 
 // Get projectId from https://cloud.reown.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
-export const networks = isDevelopment ? [octaspace, mainnet, bsc, sepolia] : [octaspace, mainnet, bsc];
+export const networks = isDevelopment ? [octaspace, mainnet, bsc, sepolia] : [octaspace, bsc];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({

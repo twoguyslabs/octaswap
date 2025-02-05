@@ -1,10 +1,10 @@
-import { OCTA_V2_ROUTER_ABI, OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
 import { Trade } from "@uniswap/v2-sdk";
 import { useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Percent, Token, TradeType } from "@uniswap/sdk-core";
 import { parseEther } from "viem";
 import useAddress from "./use-address";
 import { useMemo } from "react";
+import useDexConfig from "./use-dex-config";
 
 export default function useSwapSimulation(
   t0: UnionToken | undefined,
@@ -13,8 +13,10 @@ export default function useSwapSimulation(
   swapExactOutput: Trade<Token, Token, TradeType.EXACT_OUTPUT> | undefined,
 ) {
   const address = useAddress();
+  const { ROUTER_ADDRESS, ROUTER_ABI } = useDexConfig();
+
   const slippage = useMemo(() => new Percent("500", "10000"), []);
-  const deadline = useMemo(() => BigInt(Math.floor(Date.now() / 1000) + 60 * 20), []);
+  const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20);
 
   const { inputAmount, amountOutMin, inputPath } = useMemo(() => {
     if (!t0 || !t1 || !swapExactInput) {
@@ -41,8 +43,8 @@ export default function useSwapSimulation(
   }, [t0, t1, slippage, swapExactOutput]);
 
   const { data: simulateExactTokensForTokens } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapExactTokensForTokens",
     args: [inputAmount, amountOutMin, inputPath, address, deadline],
     query: {
@@ -51,8 +53,8 @@ export default function useSwapSimulation(
   });
 
   const { data: simulateTokensForExactTokens } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapTokensForExactTokens",
     args: [outputAmount, amountInMax, outputPath, address, deadline],
     query: {
@@ -61,30 +63,30 @@ export default function useSwapSimulation(
   });
 
   const { data: simulateExactETHForTokens } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapExactETHForTokens",
     args: [amountOutMin, inputPath, address, deadline],
     value: inputAmount,
   });
 
   const { data: simulateTokensForExactETH } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapTokensForExactETH",
     args: [outputAmount, amountInMax, outputPath, address, deadline],
   });
 
   const { data: simulateExactTokensForETH } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapExactTokensForETH",
     args: [inputAmount, amountOutMin, inputPath, address, deadline],
   });
 
   const { data: simulateETHForExactTokens } = useSimulateContract({
-    address: OCTA_V2_ROUTER_ADDRESS,
-    abi: OCTA_V2_ROUTER_ABI,
+    address: ROUTER_ADDRESS,
+    abi: ROUTER_ABI,
     functionName: "swapETHForExactTokens",
     args: [outputAmount, outputPath, address, deadline],
     value: amountInMax,
@@ -98,7 +100,7 @@ export default function useSwapSimulation(
     simulateExactTokensForETH ||
     simulateETHForExactTokens;
 
-  const { writeContract, isPending, data: hash } = useWriteContract();
+  const { writeContract, isPending: isSwapPending, data: hash } = useWriteContract();
 
   const { isLoading: isSwapConfirming, isSuccess: isSwapConfirmed } = useWaitForTransactionReceipt({
     hash,
@@ -107,5 +109,5 @@ export default function useSwapSimulation(
   // @ts-expect-error mixing simulation with OR
   const handleSwap = () => writeContract(simulation!.request);
 
-  return { handleSwap, isPending, isSwapConfirming, isSwapConfirmed };
+  return { handleSwap, isSwapPending, isSwapConfirming, isSwapConfirmed };
 }

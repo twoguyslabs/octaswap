@@ -1,5 +1,4 @@
-export const OCTA_V2_ROUTER_ADDRESS =
-  "0x04142a0effe2c9D8e7189edACf7f65EBfa428B40";
+export const OCTA_V2_ROUTER_ADDRESS = "0x04142a0effe2c9D8e7189edACf7f65EBfa428B40";
 export const OCTA_V2_ROUTER_ABI = [
   {
     inputs: [

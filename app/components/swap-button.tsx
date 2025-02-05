@@ -5,16 +5,18 @@ import { useAccount } from "wagmi";
 export default function SwapButton({
   isAllowance,
   onHandleClick,
-  isPending,
+  isApprovePending,
+  isSwapPending,
 }: {
   isAllowance: boolean;
   onHandleClick: () => void;
-  isPending: boolean;
+  isApprovePending: boolean;
+  isSwapPending: boolean;
 }) {
   const { isConnected } = useAccount();
   const { open } = useAppKit();
   return isConnected ? (
-    <Button className="mt-5 w-full" onClick={onHandleClick} disabled={isPending}>
+    <Button className="mt-5 w-full" onClick={onHandleClick} disabled={isApprovePending || isSwapPending}>
       {isAllowance ? "Swap" : "Approve"}
     </Button>
   ) : (

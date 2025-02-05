@@ -29,7 +29,7 @@ const metadata = {
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: isDevelopment ? [octaspace, mainnet, bsc, sepolia] : [octaspace, mainnet, bsc],
+  networks: isDevelopment ? [octaspace, mainnet, bsc, sepolia] : [octaspace, bsc],
   defaultNetwork: octaspace,
   metadata: metadata,
   features: {

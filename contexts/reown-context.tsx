@@ -5,7 +5,7 @@ import { createAppKit } from "@reown/appkit/react";
 import { mainnet, sepolia, bsc } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider } from "wagmi";
-import { config, projectId, wagmiAdapter } from "@/config/wagmi";
+import { config, isDevelopment, projectId, wagmiAdapter } from "@/config/wagmi";
 import { octaspace } from "@/config/chains";
 
 // Set up queryClient
@@ -29,7 +29,7 @@ const metadata = {
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [octaspace, mainnet, bsc, sepolia],
+  networks: isDevelopment ? [octaspace, mainnet, bsc, sepolia] : [octaspace, mainnet, bsc],
   defaultNetwork: octaspace,
   metadata: metadata,
   features: {

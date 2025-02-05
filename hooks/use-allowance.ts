@@ -14,9 +14,6 @@ export default function useAllowance(token: UnionToken | undefined, amount: stri
     abi: erc20Abi,
     functionName: "allowance",
     args: [address, OCTA_V2_ROUTER_ADDRESS],
-    query: {
-      refetchInterval: 1000,
-    },
   });
 
   const isAllowance = !isWrapped ? (allowance ? (allowance >= amounts ? true : false) : false) : true;

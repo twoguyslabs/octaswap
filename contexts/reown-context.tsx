@@ -9,7 +9,13 @@ import { config, projectId, wagmiAdapter } from "@/config/wagmi";
 import { octaspace } from "@/config/chains";
 
 // Set up queryClient
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchInterval: 1000,
+    },
+  },
+});
 
 if (!projectId) {
   throw new Error("Project ID is not defined");
@@ -24,7 +30,7 @@ const metadata = {
 };
 
 // Create the modal
-const modal = createAppKit({
+createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: [octaspace, mainnet, bsc, sepolia],
@@ -39,13 +45,7 @@ const modal = createAppKit({
   },
 });
 
-function ReownProvider({
-  children,
-  cookies,
-}: {
-  children: ReactNode;
-  cookies: string | null;
-}) {
+function ReownProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
   const initialState = cookieToInitialState(config, cookies);
 
   return (

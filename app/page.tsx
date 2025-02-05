@@ -9,8 +9,11 @@ import { OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router
 import useAllowance from "@/hooks/use-allowance";
 import useAmount from "@/hooks/use-amount";
 import useApprove from "@/hooks/use-approve";
+import usePairReserves from "@/hooks/use-pair-reserves";
 import useSwapRate from "@/hooks/use-swap-rate";
+import useSwapSimulation from "@/hooks/use-swap-simulation";
 import useToken from "@/hooks/use-token";
+import { swap } from "@/lib/v2-sdk";
 import dynamic from "next/dynamic";
 
 const Swap = dynamic(
@@ -21,10 +24,16 @@ const Swap = dynamic(
 
       const { amount, setAmount0, setAmount1, swapAmountValue } = useAmount();
 
+      const reserves = usePairReserves(token0, token1);
+
       const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
       const { isAllowance: isToken0Allowance } = useAllowance(token0, amount.amount0);
 
       const handleApprove = useApprove(token0?.address, OCTA_V2_ROUTER_ADDRESS, amount.amount0 || getAmountsIn);
+
+      const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
+
+      const handleSwap = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
 
       return (
         <main>
@@ -54,7 +63,7 @@ const Swap = dynamic(
                     onSetAmount={setAmount1}
                     rateAmounts={getAmountsOut}
                   />
-                  <Button className="mt-5 w-full" onClick={handleApprove}>
+                  <Button className="mt-5 w-full" onClick={isToken0Allowance ? handleSwap : handleApprove}>
                     {isToken0Allowance ? "Swap" : "Approve"}
                   </Button>
                 </CardContent>

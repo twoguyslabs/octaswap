@@ -35,8 +35,8 @@ export default function TokenList({
     const filteredTokens = mergedTokens
       .filter((token: UnionToken) => matchQuery(token, searchQuery))
       .sort((a, b) => {
-        if (a.address === null) return -1;
-        if (b.address === null) return 1;
+        if (a.isNative) return -1;
+        if (b.isNative) return 1;
         return a.symbol.localeCompare(b.symbol);
       });
 

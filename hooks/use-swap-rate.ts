@@ -1,5 +1,5 @@
 import { OCTA_V2_ROUTER_ABI, OCTA_V2_ROUTER_ADDRESS } from "@/contracts/octaspace/dex/octa-v2-router";
-import { parseUnits } from "viem";
+import { parseEther } from "viem";
 import { useReadContract } from "wagmi";
 
 export default function useSwapRate(
@@ -13,10 +13,7 @@ export default function useSwapRate(
     abi: OCTA_V2_ROUTER_ABI,
     functionName: "getAmountsOut",
     // @ts-expect-error undefined not assignable to `0x${string}`
-    args: [parseUnits(amount0, 18), [token0?.address, token1?.address]],
-    query: {
-      refetchInterval: 1000,
-    },
+    args: [parseEther(amount0), [token0?.address, token1?.address]],
   });
 
   const { data: getAmountsIn } = useReadContract({
@@ -24,10 +21,7 @@ export default function useSwapRate(
     abi: OCTA_V2_ROUTER_ABI,
     functionName: "getAmountsIn",
     // @ts-expect-error undefined not assignable to `0x${string}`
-    args: [parseUnits(amount1, 18), [token0?.address, token1?.address]],
-    query: {
-      refetchInterval: 1000,
-    },
+    args: [parseEther(amount1), [token0?.address, token1?.address]],
   });
 
   const amountsOut = getAmountsOut?.[1];

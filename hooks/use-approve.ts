@@ -15,8 +15,8 @@ export default function useApprove(
     args: [spender, parsedAmount],
   });
 
-  const { writeContract: writeApprove } = useWriteContract();
-  const handleApprove = () => writeApprove(simulateApprove!.request);
+  const { writeContract } = useWriteContract();
+  const handleApprove = () => writeContract(simulateApprove!.request);
 
   return handleApprove;
 }

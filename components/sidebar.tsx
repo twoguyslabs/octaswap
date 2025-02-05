@@ -10,11 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { generateBreadcrumbs } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -22,9 +18,7 @@ import { usePathname } from "next/navigation";
 
 const Sidebar = dynamic(
   () =>
-    Promise.resolve(function Sidebar({
-      children,
-    }: Readonly<{ children: React.ReactNode }>) {
+    Promise.resolve(function Sidebar({ children }: Readonly<{ children: React.ReactNode }>) {
       const pathname = usePathname();
       const breadcrumbs = generateBreadcrumbs(pathname);
 
@@ -49,9 +43,7 @@ const Sidebar = dynamic(
                         {index < breadcrumbs.length - 1 ? (
                           <>
                             <BreadcrumbLink asChild>
-                              <Link href={breadcrumb.href}>
-                                {breadcrumb.label}
-                              </Link>
+                              <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
                             </BreadcrumbLink>
                             <BreadcrumbSeparator />
                           </>

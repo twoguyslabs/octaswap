@@ -9,8 +9,12 @@ export default function useToken({ useNative }: { useNative: boolean }) {
   const [token, setToken] = useState<UnionToken | undefined>(initial);
 
   useEffect(() => {
-    setToken(initial);
-  }, [initial]);
+    if (useNative) {
+      setToken(NATIVE[chainId]);
+    } else {
+      setToken(undefined);
+    }
+  }, [useNative, chainId]);
 
   return [token, setToken] as const;
 }

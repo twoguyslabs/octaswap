@@ -15,6 +15,7 @@ export function NavMisc({
     name: string;
     url: string;
     icon: LucideIcon;
+    isActive: boolean;
   }[];
 }) {
   return (

@@ -1,10 +1,6 @@
 import { ChevronRight, type LucideIcon } from "lucide-react";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -27,6 +23,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      isActive: boolean;
     }[];
   }[];
 }) {
@@ -35,12 +32,7 @@ export function NavMain({
       <SidebarGroupLabel>Main</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
+          <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip={item.title}>
@@ -53,9 +45,14 @@ export function NavMain({
                 <SidebarMenuSub>
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
+                      <SidebarMenuSubButton
+                        asChild
+                        className={!subItem.isActive ? "pointer-events-none text-muted-foreground" : ""}
+                      >
+                        <a href={!subItem.isActive ? "" : subItem.url}>
+                          <span>
+                            {subItem.title} {!subItem.isActive ? "(In Progress)" : ""}
+                          </span>
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>

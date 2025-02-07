@@ -78,8 +78,10 @@ const Swap = dynamic(
                     rateAmounts={getAmountsOut}
                   />
                   <ReviewButton
-                    t0Amount={amount.amount0}
-                    t1Amount={amount.amount1}
+                    t0ChainId={token0?.chainId}
+                    t1ChainId={token1?.chainId}
+                    t0Amount={amount.amount0 || getAmountsIn}
+                    t1Amount={amount.amount1 || getAmountsOut}
                     onOpenTxConfirm={setOpenTxConfirm}
                   />
                 </CardContent>

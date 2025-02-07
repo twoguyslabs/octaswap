@@ -4,18 +4,22 @@ import { Dispatch, SetStateAction } from "react";
 import { useAccount } from "wagmi";
 
 export default function ReviewButton({
+  t0ChainId,
+  t1ChainId,
   t0Amount,
   t1Amount,
   onOpenTxConfirm,
 }: {
-  t0Amount: string;
-  t1Amount: string;
+  t0ChainId: number | undefined;
+  t1ChainId: number | undefined;
+  t0Amount: string | (bigint | undefined);
+  t1Amount: string | (bigint | undefined);
   onOpenTxConfirm: Dispatch<SetStateAction<boolean>>;
 }) {
   const { open } = useAppKit();
   const { isConnected } = useAccount();
 
-  const disabled = t0Amount === "" && t1Amount === "";
+  const disabled = !t0ChainId || !t1ChainId || !t0Amount || !t1Amount;
 
   return isConnected ? (
     <Button className="mt-5 w-full" onClick={() => onOpenTxConfirm(true)} disabled={disabled}>

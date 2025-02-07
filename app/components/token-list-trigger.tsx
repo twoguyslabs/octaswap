@@ -34,7 +34,7 @@ export default function TokenListTrigger({
             </>
           )
         ) : (
-          <span className="text-xl font-bold">Select token</span>
+          <span className="text-xl font-bold">Select Token</span>
         )}
       </Button>
     </DialogTrigger>

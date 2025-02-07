@@ -28,7 +28,7 @@ export function hasToken(token: UnionToken, tokens: UnionToken[]) {
 
 export function formatStringAmount(amount: string) {
   const num = Number(amount);
-  return num > 1 ? num.toFixed(2) : num ? num.toFixed(8) : amount;
+  return num >= 1 ? num.toFixed(2) : num ? num.toFixed(8) : amount;
 }
 
 export function mockToken(): UnionToken {

@@ -8,6 +8,9 @@ export default function useTokenBalance(token: UnionToken | undefined) {
 
   const { data: nativeBalance } = useBalance({
     address,
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: tokenBalance } = useReadContract({
@@ -15,6 +18,9 @@ export default function useTokenBalance(token: UnionToken | undefined) {
     address: token?.address,
     functionName: "balanceOf",
     args: [address],
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const balance = isNative ? nativeBalance?.value : tokenBalance;

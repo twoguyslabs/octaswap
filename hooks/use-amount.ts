@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const pattern = /^(\d+\.?\d*)?$/;
 
@@ -22,5 +22,7 @@ export default function useAmount() {
     setAmount({ amount0: amount.amount1, amount1: amount.amount0 });
   };
 
-  return { amount, setAmount0, setAmount1, swapAmountValue };
+  const resetAmount = useCallback(() => setAmount({ amount0: "", amount1: "" }), []);
+
+  return { amount, setAmount0, setAmount1, swapAmountValue, resetAmount };
 }

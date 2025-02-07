@@ -26,9 +26,9 @@ export default function SwapTokenPlace({
   const toggleRotation = () => setIsRotated(!isRotated);
 
   const onClick = () => {
+    onSwapAmountValue();
     swapTokenPlace();
     toggleRotation();
-    onSwapAmountValue();
   };
   return (
     <div className="relative">

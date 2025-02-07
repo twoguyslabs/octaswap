@@ -9,13 +9,7 @@ import { config, isDevelopment, projectId, wagmiAdapter } from "@/config/wagmi";
 import { octaspace } from "@/config/chains";
 
 // Set up queryClient
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchInterval: 1000,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 // Set up metadata
 const metadata = {

@@ -6,40 +6,52 @@ import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Card, CardContent } from "@/components/ui/card";
 import useAllowance from "@/hooks/use-allowance";
 import useAmount from "@/hooks/use-amount";
-import useApprove from "@/hooks/use-approve";
 import usePairReserves from "@/hooks/use-pair-reserves";
 import useSwapRate from "@/hooks/use-swap-rate";
 import useSwapSimulation from "@/hooks/use-swap-simulation";
 import useToken from "@/hooks/use-token";
 import { swap } from "@/lib/swap";
 import dynamic from "next/dynamic";
-import SwapButton from "./components/swap-button";
+import useApproveSimulation from "@/hooks/use-approve-simulation";
+import { useState } from "react";
+import TxConfirm from "./components/tx-confirm";
+import ReviewButton from "./components/review-button";
 
 const Swap = dynamic(
   () =>
     Promise.resolve(function Swap() {
+      const [openTxConfirm, setOpenTxConfirm] = useState(false);
+
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const { amount, setAmount0, setAmount1, swapAmountValue } = useAmount();
-
-      const reserves = usePairReserves(token0, token1);
+      const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount();
 
       const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
+      const reserves = usePairReserves(token0, token1);
+      const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
-      const { isAllowance } = useAllowance(token0, amount.amount0);
-
-      const { handleApprove, isApprovePending } = useApprove(token0?.address, amount.amount0 || getAmountsIn);
-
+      const approveSimulation = useApproveSimulation(token0?.address, amount.amount0 || getAmountsIn);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
-
-      const { handleSwap, isSwapPending } = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
-
-      const handleClick = isAllowance ? handleSwap : handleApprove;
+      const swapSimulation = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
 
       return (
         <main>
-          <div className="mx-auto max-w-[30rem] px-4 sm:pt-10 md:px-0">
+          <TxConfirm
+            openTxConfirm={openTxConfirm}
+            onOpenTxConfirm={setOpenTxConfirm}
+            t0Amount={amount.amount0 || getAmountsIn}
+            t0Symbol={token0?.symbol}
+            t0Logo={token0?.logoURI}
+            t1Amount={amount.amount1 || getAmountsOut}
+            t1Symbol={token1?.symbol}
+            t1Logo={token1?.logoURI}
+            isAllowance={isAllowance}
+            approveSimulation={approveSimulation}
+            swapSimulation={swapSimulation}
+            onResetAmount={resetAmount}
+          />
+          <div className="mx-auto max-w-[29rem] px-4 sm:pt-10 md:px-0">
             <div className="space-y-2">
               <SwapSettings />
               <Card>
@@ -65,11 +77,10 @@ const Swap = dynamic(
                     onSetAmount={setAmount1}
                     rateAmounts={getAmountsOut}
                   />
-                  <SwapButton
-                    isAllowance={isAllowance}
-                    onHandleClick={handleClick}
-                    isApprovePending={isApprovePending}
-                    isSwapPending={isSwapPending}
+                  <ReviewButton
+                    t0Amount={amount.amount0}
+                    t1Amount={amount.amount1}
+                    onOpenTxConfirm={setOpenTxConfirm}
                   />
                 </CardContent>
               </Card>

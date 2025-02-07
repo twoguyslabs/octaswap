@@ -5,6 +5,7 @@ import Sidebar from "@/components/sidebar";
 import ReownProvider from "@/contexts/reown-context";
 import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -30,6 +31,7 @@ export default async function RootLayout({
         <ReownProvider cookies={cookies}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Sidebar>{children}</Sidebar>
+            <Toaster duration={3000} />
           </ThemeProvider>
         </ReownProvider>
       </body>

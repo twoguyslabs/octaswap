@@ -1,5 +1,5 @@
 import { Trade } from "@uniswap/v2-sdk";
-import { useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useSimulateContract } from "wagmi";
 import { Percent, Token, TradeType } from "@uniswap/sdk-core";
 import { parseEther } from "viem";
 import useAddress from "./use-address";
@@ -92,7 +92,7 @@ export default function useSwapSimulation(
     value: amountInMax,
   });
 
-  const simulation =
+  const swapsimulation =
     simulateExactTokensForTokens ||
     simulateTokensForExactTokens ||
     simulateExactETHForTokens ||
@@ -100,14 +100,5 @@ export default function useSwapSimulation(
     simulateExactTokensForETH ||
     simulateETHForExactTokens;
 
-  const { writeContract, isPending: isSwapPending, data: hash } = useWriteContract();
-
-  const { isLoading: isSwapConfirming, isSuccess: isSwapConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
-
-  // @ts-expect-error mixing simulation with OR
-  const handleSwap = () => writeContract(simulation!.request);
-
-  return { handleSwap, isSwapPending, isSwapConfirming, isSwapConfirmed };
+  return swapsimulation;
 }

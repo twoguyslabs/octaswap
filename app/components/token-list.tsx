@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Dispatch, SetStateAction, useMemo } from "react";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import useTokens from "@/hooks/use-tokens";
 import useLocalTokens from "@/hooks/use-local-tokens";
 import useCustomTokens from "@/hooks/use-custom-tokens";
 import { hasToken, matchQuery } from "@/lib/utils";
 import { DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { CircleHelp, Coins } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -52,8 +53,49 @@ export default function TokenList({
     onOpenDialog(false);
   };
 
+  // Row renderer for virtualized list
+  const TokenRow = ({ index, style }: { index: number; style: React.CSSProperties }) => {
+    const token = tokenList[index];
+
+    return (
+      <div style={style}>
+        <Button
+          variant="ghost"
+          className="flex w-full justify-start gap-x-3 rounded-none py-8"
+          onClick={() => handleClick(token)}
+        >
+          {token.logoURI ? (
+            <>
+              <Image
+                src={token.logoURI}
+                alt={`${token.name} logo`}
+                width={100}
+                height={100}
+                quality={100}
+                priority
+                className="h-8 w-8"
+              />
+              <div className="flex flex-col items-start">
+                <span className="text-lg font-bold">{token.symbol}</span>
+                <span className="text-muted-foreground">{token.name}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <CircleHelp style={{ width: "2rem", height: "2rem" }} />
+              <div className="flex flex-col items-start">
+                <span className="text-lg font-bold">{token.symbol}</span>
+                <span className="text-muted-foreground">{token.name}</span>
+              </div>
+            </>
+          )}
+        </Button>
+      </div>
+    );
+  };
+
   return (
-    <DialogContent className="h-fit w-[90%] overflow-hidden rounded-lg pt-14" aria-describedby={undefined}>
+    <DialogContent className="h-fit w-[95%] overflow-hidden rounded-lg pt-14" aria-describedby={undefined}>
       <DialogHeader className="hidden">
         <VisuallyHidden>
           <DialogTitle></DialogTitle>
@@ -71,43 +113,33 @@ export default function TokenList({
             <Coins size={20} />
             Tokens
           </div>
-          <div className="grid">
-            <ScrollArea className="h-[350px] pr-2.5">
-              {tokenList?.map((token) => (
-                <Button
-                  key={token.name}
-                  variant="ghost"
-                  className="flex w-full justify-start gap-x-3 rounded-none py-8"
-                  onClick={() => handleClick(token)}
+          <div className="relative grid h-[350px]">
+            <style jsx global>{`
+              /* Hide scrollbar for Chrome, Safari and Opera */
+              .token-list::-webkit-scrollbar {
+                display: none;
+              }
+
+              /* Hide scrollbar for IE, Edge and Firefox */
+              .token-list {
+                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; /* Firefox */
+              }
+            `}</style>
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  className="token-list"
+                  height={height}
+                  width={width}
+                  itemCount={tokenList.length}
+                  itemSize={65}
+                  overscanCount={5}
                 >
-                  {token.logoURI ? (
-                    <>
-                      <Image
-                        src={token.logoURI}
-                        alt={`${token.name} logo`}
-                        width={100}
-                        height={100}
-                        quality={100}
-                        priority
-                        className="h-8 w-8"
-                      />
-                      <div className="flex flex-col items-start">
-                        <span className="text-lg font-bold">{token.symbol}</span>
-                        <span className="text-muted-foreground">{token.name}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <CircleHelp style={{ width: "2rem", height: "2rem" }} />
-                      <div className="flex flex-col items-start">
-                        <span className="text-lg font-bold">{token.symbol}</span>
-                        <span className="text-muted-foreground">{token.name}</span>
-                      </div>
-                    </>
-                  )}
-                </Button>
-              ))}
-            </ScrollArea>
+                  {TokenRow}
+                </List>
+              )}
+            </AutoSizer>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ function TokenInfo({
         <div className="text-2xl font-medium">
           {amount} {tokenSymbol}
         </div>
-        <div className="text-muted-foreground">${tokenPrice}</div>
+        {/* <div className="text-muted-foreground">${tokenPrice}</div> */}
       </div>
       <div>{tokenLogo && <Image src={tokenLogo} alt={`${tokenSymbol} Logo`} width={40} height={40} />}</div>
     </div>
@@ -135,9 +135,9 @@ export default function TxConfirm({
           </VisuallyHidden>
         </DialogHeader>
         <div className="text-sm text-muted-foreground">You&apos;re Swapping</div>
-        <TokenInfo tokenAmount={t0Amount} tokenSymbol={t0Symbol} tokenPrice="0.28" tokenLogo={t0Logo} />
+        <TokenInfo tokenAmount={t0Amount} tokenSymbol={t0Symbol} tokenPrice="0" tokenLogo={t0Logo} />
         <ArrowDown size={20} className="text-muted-foreground" />
-        <TokenInfo tokenAmount={t1Amount} tokenSymbol={t1Symbol} tokenPrice="0.28" tokenLogo={t1Logo} />
+        <TokenInfo tokenAmount={t1Amount} tokenSymbol={t1Symbol} tokenPrice="0" tokenLogo={t1Logo} />
         <Button className="mt-3" onClick={() => handleClick(writeTx)} disabled={disabled}>
           <span className="flex items-center gap-x-2">{getButtonText()}</span>
         </Button>

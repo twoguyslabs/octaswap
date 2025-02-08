@@ -16,6 +16,7 @@ import useApproveSimulation from "@/hooks/use-approve-simulation";
 import { useState } from "react";
 import TxConfirm from "./components/tx-confirm";
 import ReviewButton from "./components/review-button";
+import useTokenBalance from "@/hooks/use-token-balance";
 
 const Swap = dynamic(
   () =>
@@ -27,11 +28,14 @@ const Swap = dynamic(
 
       const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount();
 
+      const balance0 = useTokenBalance(token0);
+      const balance1 = useTokenBalance(token1);
+
       const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
       const reserves = usePairReserves(token0, token1);
       const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
-      const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn);
+      const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn, balance0);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
       const swapSimulation = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
 
@@ -61,6 +65,7 @@ const Swap = dynamic(
                     onSetToken={setToken0}
                     amount={amount.amount0}
                     onSetAmount={setAmount0}
+                    tokenBalance={balance0}
                     rateAmounts={getAmountsIn}
                   />
                   <SwapTokenPlace
@@ -75,14 +80,16 @@ const Swap = dynamic(
                     onSetToken={setToken1}
                     amount={amount.amount1}
                     onSetAmount={setAmount1}
+                    tokenBalance={balance1}
                     rateAmounts={getAmountsOut}
                   />
                   <ReviewButton
+                    onOpenTxConfirm={setOpenTxConfirm}
                     t0ChainId={token0?.chainId}
                     t1ChainId={token1?.chainId}
                     t0Amount={amount.amount0 || getAmountsIn}
                     t1Amount={amount.amount1 || getAmountsOut}
-                    onOpenTxConfirm={setOpenTxConfirm}
+                    balance0={balance0}
                     approveSimulation={approveSimulation}
                     swapSimulation={swapSimulation}
                   />

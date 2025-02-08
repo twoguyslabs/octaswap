@@ -13,7 +13,7 @@ import useToken from "@/hooks/use-token";
 import { swap } from "@/lib/swap";
 import dynamic from "next/dynamic";
 import useApproveSimulation from "@/hooks/use-approve-simulation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TxConfirm from "./components/tx-confirm";
 import ReviewButton from "./components/review-button";
 
@@ -31,9 +31,14 @@ const Swap = dynamic(
       const reserves = usePairReserves(token0, token1);
       const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
-      const approveSimulation = useApproveSimulation(token0?.address, amount.amount0 || getAmountsIn);
+      const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
       const swapSimulation = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
+
+      useEffect(() => {
+        console.log("approveSimulation", approveSimulation);
+        console.log("swapSimulation", swapSimulation);
+      }, [approveSimulation, swapSimulation]);
 
       return (
         <main>
@@ -83,6 +88,8 @@ const Swap = dynamic(
                     t0Amount={amount.amount0 || getAmountsIn}
                     t1Amount={amount.amount1 || getAmountsOut}
                     onOpenTxConfirm={setOpenTxConfirm}
+                    approveSimulation={approveSimulation}
+                    swapSimulation={swapSimulation}
                   />
                 </CardContent>
               </Card>

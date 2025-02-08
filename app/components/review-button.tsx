@@ -9,17 +9,21 @@ export default function ReviewButton({
   t0Amount,
   t1Amount,
   onOpenTxConfirm,
+  approveSimulation,
+  swapSimulation,
 }: {
   t0ChainId: number | undefined;
   t1ChainId: number | undefined;
   t0Amount: string | (bigint | undefined);
   t1Amount: string | (bigint | undefined);
   onOpenTxConfirm: Dispatch<SetStateAction<boolean>>;
+  approveSimulation: any;
+  swapSimulation: any;
 }) {
   const { open } = useAppKit();
   const { isConnected } = useAccount();
 
-  const disabled = !t0ChainId || !t1ChainId || !t0Amount || !t1Amount;
+  const disabled = !t0ChainId || !t1ChainId || !t0Amount || !t1Amount || (!approveSimulation && !swapSimulation);
 
   return isConnected ? (
     <Button className="mt-5 w-full" onClick={() => onOpenTxConfirm(true)} disabled={disabled}>

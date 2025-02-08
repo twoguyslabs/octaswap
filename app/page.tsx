@@ -85,8 +85,8 @@ const Swap = dynamic(
                   />
                   <ReviewButton
                     onOpenTxConfirm={setOpenTxConfirm}
-                    t0ChainId={token0?.chainId}
-                    t1ChainId={token1?.chainId}
+                    t0={token0}
+                    t1={token1}
                     t0Amount={amount.amount0 || getAmountsIn}
                     t1Amount={amount.amount1 || getAmountsOut}
                     balance0={balance0}

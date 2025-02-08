@@ -6,8 +6,8 @@ import { useAccount } from "wagmi";
 
 export default function ReviewButton({
   onOpenTxConfirm,
-  t0ChainId,
-  t1ChainId,
+  t0,
+  t1,
   t0Amount,
   t1Amount,
   balance0,
@@ -15,8 +15,8 @@ export default function ReviewButton({
   swapSimulation,
 }: {
   onOpenTxConfirm: Dispatch<SetStateAction<boolean>>;
-  t0ChainId: number | undefined;
-  t1ChainId: number | undefined;
+  t0: UnionToken | undefined;
+  t1: UnionToken | undefined;
   t0Amount: string | (bigint | undefined);
   t1Amount: string | (bigint | undefined);
   balance0: bigint | undefined;
@@ -34,11 +34,16 @@ export default function ReviewButton({
       : false;
 
   const disabled =
-    !t0ChainId || !t1ChainId || !t0Amount || !t1Amount || isExceedBalance0 || (!approveSimulation && !swapSimulation);
+    !t0?.chainId ||
+    !t1?.chainId ||
+    !t0Amount ||
+    !t1Amount ||
+    isExceedBalance0 ||
+    (!approveSimulation && !swapSimulation);
 
   return isConnected ? (
     <Button size="lg" className="mt-5 w-full" onClick={() => onOpenTxConfirm(true)} disabled={disabled}>
-      {isExceedBalance0 ? "Insufficient balance" : "Review"}
+      {isExceedBalance0 ? `Insufficient ${t0?.symbol}` : "Review"}
     </Button>
   ) : (
     <Button size="lg" className="mt-5 w-full" onClick={() => open({ view: "Connect" })}>

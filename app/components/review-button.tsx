@@ -26,11 +26,11 @@ export default function ReviewButton({
   const disabled = !t0ChainId || !t1ChainId || !t0Amount || !t1Amount || (!approveSimulation && !swapSimulation);
 
   return isConnected ? (
-    <Button className="mt-5 w-full" onClick={() => onOpenTxConfirm(true)} disabled={disabled}>
+    <Button size="lg" className="mt-5 w-full" onClick={() => onOpenTxConfirm(true)} disabled={disabled}>
       Review
     </Button>
   ) : (
-    <Button className="mt-5 w-full" onClick={() => open({ view: "Connect" })}>
+    <Button size="lg" className="mt-5 w-full" onClick={() => open({ view: "Connect" })}>
       Connect Wallet
     </Button>
   );

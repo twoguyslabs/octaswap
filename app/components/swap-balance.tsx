@@ -1,16 +1,14 @@
-import useTokenBalance from "@/hooks/use-token-balance";
 import { formatStringAmount } from "@/lib/utils";
 import { BiSolidWalletAlt } from "react-icons/bi";
 import { formatUnits } from "viem";
 
 export default function SwapBalance({
-  token,
+  balance,
   onSetAmount,
 }: {
-  token: UnionToken | undefined;
+  balance: bigint | undefined;
   onSetAmount: (value: string) => void;
 }) {
-  const balance = useTokenBalance(token);
   const stringBalance = balance ? formatUnits(balance, 18) : "0";
   const formattedBalance = formatStringAmount(stringBalance);
 

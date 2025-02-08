@@ -1,6 +1,5 @@
+import { numericValidation } from "@/lib/utils";
 import { useCallback, useState } from "react";
-
-const pattern = /^(\d+\.?\d*)?$/;
 
 export default function useAmount() {
   const [amount, setAmount] = useState({
@@ -9,12 +8,12 @@ export default function useAmount() {
   });
 
   const setAmount0 = (value: string) => {
-    if (!pattern.test(value)) return;
+    if (!numericValidation.test(value)) return;
     setAmount({ amount0: value, amount1: "" });
   };
 
   const setAmount1 = (value: string) => {
-    if (!pattern.test(value)) return;
+    if (!numericValidation.test(value)) return;
     setAmount({ amount1: value, amount0: "" });
   };
 

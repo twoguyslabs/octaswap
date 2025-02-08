@@ -2,8 +2,15 @@ import { Settings } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import Slippage from "./slippage";
 import Deadline from "./deadline";
+import { Dispatch, SetStateAction } from "react";
 
-export default function SwapSettings() {
+export default function SwapSettings({
+  onSetSlippage,
+  onSetDeadline,
+}: {
+  onSetSlippage: Dispatch<SetStateAction<string>>;
+  onSetDeadline: Dispatch<SetStateAction<string>>;
+}) {
   return (
     <Dialog>
       <div className="text-right">
@@ -14,15 +21,15 @@ export default function SwapSettings() {
         </DialogTrigger>
       </div>
       <DialogContent
-        className="w-[90%] max-w-md rounded-lg"
+        className="w-[95%] max-w-md rounded-lg"
         onOpenAutoFocus={(e) => e.preventDefault()}
         aria-describedby={undefined}
       >
         <DialogHeader className="py-4">
           <DialogTitle>Swap Settings</DialogTitle>
         </DialogHeader>
-        <Slippage />
-        <Deadline />
+        <Slippage onSetSlippage={onSetSlippage} />
+        <Deadline onSetDeadline={onSetDeadline} />
       </DialogContent>
     </Dialog>
   );

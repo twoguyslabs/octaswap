@@ -1,4 +1,4 @@
-import { RefreshCcw } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Separator } from "../../components/ui/separator";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -35,7 +35,7 @@ export default function SwapTokenPlace({
       <Separator orientation="horizontal" className="mb-9 mt-14" />
       <div className="absolute inset-0 flex items-center justify-center">
         <Button variant="outline" size="icon" onClick={() => onClick()}>
-          <RefreshCcw className={cn("transform transition duration-300 ease-in-out", isRotated ? "rotate-180" : "")} />
+          <ArrowUpDown className={cn("transform transition duration-300 ease-in-out", isRotated ? "rotate-180" : "")} />
         </Button>
       </div>
     </div>

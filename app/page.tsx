@@ -17,27 +17,51 @@ import { useState } from "react";
 import TxConfirm from "./components/tx-confirm";
 import ReviewButton from "./components/review-button";
 import useTokenBalance from "@/hooks/use-token-balance";
+import SwapData from "./components/swap-data";
 
 const Swap = dynamic(
   () =>
     Promise.resolve(function Swap() {
       const [openTxConfirm, setOpenTxConfirm] = useState(false);
+      const [collapsible, setCollapsible] = useState(false);
 
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
       const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount();
 
+      const [slippage, setSlippage] = useState("50"); // in bps - default to 0.5%
+      const [deadline, setDeadline] = useState("5"); // default to 5 minutes
+
       const balance0 = useTokenBalance(token0);
       const balance1 = useTokenBalance(token1);
 
-      const { getAmountsOut, getAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
+      const { getAmountsOut, getAmountsIn, flatAmountsOut, flatAmountsIn } = useSwapRate(
+        token0,
+        token1,
+        amount.amount0,
+        amount.amount1,
+      );
+
       const reserves = usePairReserves(token0, token1);
       const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
       const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn, balance0);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
-      const swapSimulation = useSwapSimulation(token0, token1, swapExactInput, swapExactOutput);
+      const { swapSimulation, amountOutMin, amountInMax, priceImpactOut, priceImpactIn } = useSwapSimulation(
+        token0,
+        token1,
+        slippage,
+        deadline,
+        swapExactInput,
+        swapExactOutput,
+      );
+
+      const isSwapData =
+        !token0?.chainId ||
+        !token1?.chainId ||
+        (!amount.amount0 && !amount.amount1) ||
+        (!getAmountsOut && !getAmountsIn);
 
       return (
         <main>
@@ -55,9 +79,9 @@ const Swap = dynamic(
             swapSimulation={swapSimulation}
             onResetAmount={resetAmount}
           />
-          <div className="mx-auto max-w-[29rem] px-4 sm:pt-10 md:px-0">
+          <div className="mx-auto max-w-[29rem] px-4 sm:py-10 md:px-0">
             <div className="space-y-2">
-              <SwapSettings />
+              <SwapSettings onSetSlippage={setSlippage} onSetDeadline={setDeadline} />
               <Card>
                 <CardContent className="px-4 py-5">
                   <SwapBox
@@ -95,6 +119,20 @@ const Swap = dynamic(
                   />
                 </CardContent>
               </Card>
+              {!isSwapData && (
+                <SwapData
+                  collapsible={collapsible}
+                  onSetCollapsible={setCollapsible}
+                  t0Symbol={token0.symbol}
+                  t1Symbol={token1.symbol}
+                  a0={amount.amount0}
+                  slippage={slippage}
+                  priceImpact={priceImpactOut || priceImpactIn}
+                  minimumMaximum={amountOutMin || amountInMax}
+                  flatAmountsOut={flatAmountsOut}
+                  flatAmountsIn={flatAmountsIn}
+                />
+              )}
             </div>
           </div>
         </main>

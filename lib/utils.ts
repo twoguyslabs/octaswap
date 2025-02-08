@@ -42,3 +42,5 @@ export function mockToken(): UnionToken {
     isNative: false,
   };
 }
+
+export const numericValidation = /^(\d+\.?\d*)?$/;

@@ -117,7 +117,7 @@ export default function SwapData({
         <div className="flex items-center justify-between">
           <div>{a0 ? "Minimum Received" : "Maximum Sold"}</div>
           <div className="text-primary">
-            {formattedMinMax} {a0 ? t0Symbol : t1Symbol}
+            {formattedMinMax} {a0 ? t1Symbol : t0Symbol}
           </div>
         </div>
       </CollapsibleContent>

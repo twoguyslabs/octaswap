@@ -5,20 +5,20 @@ import useDexConfig from "./use-dex-config";
 export default function useApproveSimulation(
   token: UnionToken | undefined,
   amount: string | (bigint | undefined),
-  balance: bigint | undefined,
+  isAllowance: boolean,
 ) {
   const { ROUTER_ADDRESS } = useDexConfig();
 
-  const parsedAmount = typeof amount === "string" ? parseEther(amount) : amount || BigInt(0);
-  const isExceedBalance = balance ? parsedAmount > balance : false;
+  const parsedAmount = typeof amount === "string" ? parseEther(amount) : amount;
 
   const { data: approveSimulation } = useSimulateContract({
     address: token?.address,
     abi: erc20Abi,
     functionName: "approve",
+    // @ts-expect-error undefiend type
     args: [ROUTER_ADDRESS, parsedAmount],
     query: {
-      enabled: !token?.isNative && !isExceedBalance,
+      enabled: !token?.isNative && !isAllowance,
     },
   });
 

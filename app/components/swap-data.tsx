@@ -39,6 +39,12 @@ export default function SwapData({
   const formattedRate = rate ? formatStringAmount(formatEther(rate)) : "0";
   const formattedMinMax = formatStringAmount(formatEther(minimumMaximum));
 
+  const getPriceImpactColor = (impact: number): string => {
+    if (impact >= 5) return "!text-red-500";
+    if (impact >= 3) return "!text-yellow-500";
+    return "!text-green-400";
+  };
+
   const handleSwitchRate = () => {
     if (rate === flatAmountsIn) {
       setRate(flatAmountsOut);
@@ -107,7 +113,7 @@ export default function SwapData({
         </div>
         <div className="flex items-center justify-between">
           <div>Price Impact</div>
-          <div className="text-green-400">{priceImpact}%</div>
+          <div className={getPriceImpactColor(+priceImpact)}>{priceImpact}%</div>
         </div>
         {/* TODO: add transaction fee */}
         {/* <div className="flex items-center justify-between">

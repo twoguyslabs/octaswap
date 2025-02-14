@@ -13,7 +13,7 @@ import useToken from "@/hooks/use-token";
 import { swap } from "@/lib/swap";
 import dynamic from "next/dynamic";
 import useApproveSimulation from "@/hooks/use-approve-simulation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TxConfirm from "./components/tx-confirm";
 import ReviewButton from "./components/review-button";
 import useTokenBalance from "@/hooks/use-token-balance";
@@ -47,7 +47,7 @@ const Swap = dynamic(
       const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
       const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn, isAllowance);
-      const { swapExactInput, swapExactOutput, error } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
+      const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
       const { swapSimulation, amountOutMin, amountInMax, priceImpactOut, priceImpactIn } = useSwapSimulation(
         token0,
         token1,
@@ -62,10 +62,6 @@ const Swap = dynamic(
         !token1?.chainId ||
         (!amount.amount0 && !amount.amount1) ||
         (!getAmountsOut && !getAmountsIn);
-
-      useEffect(() => {
-        console.log(error);
-      }, [error]);
 
       return (
         <main>

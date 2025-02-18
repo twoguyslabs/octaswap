@@ -22,7 +22,7 @@ const data = {
         {
           title: "Liquidity",
           url: "/liquidity",
-          isActive: false,
+          isActive: true,
         },
         {
           title: "Staking",

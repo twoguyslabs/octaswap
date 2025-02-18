@@ -5,9 +5,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const Liquidity = dynamic(
+const Add = dynamic(
   () =>
-    Promise.resolve(function Liquidity() {
+    Promise.resolve(function Add() {
       return (
         <main className="grow">
           <div className="mx-auto min-h-full max-w-3xl px-4 sm:py-5 md:px-0">
@@ -32,9 +32,7 @@ const Liquidity = dynamic(
                 </CardFooter>
               </Card>
               <div className="text-right">
-                <Button asChild>
-                  <Link href="/liquidity/add">Create a pair</Link>
-                </Button>
+                <Button>Create a pair</Button>
               </div>
             </div>
           </div>
@@ -44,4 +42,4 @@ const Liquidity = dynamic(
   { ssr: false },
 );
 
-export default Liquidity;
+export default Add;

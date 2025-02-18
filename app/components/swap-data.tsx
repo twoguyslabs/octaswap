@@ -1,5 +1,5 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { cn, formatStringAmount } from "@/lib/utils";
+import { formatStringAmount } from "@/lib/utils";
 import { ChevronDown, Repeat } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { formatEther } from "viem";
@@ -27,8 +27,6 @@ export default function SwapData({
   flatAmountsOut: bigint | undefined;
   flatAmountsIn: bigint | undefined;
 }) {
-  const [isRotated, setIsRotated] = useState(false);
-
   const [symbol, setSymbol] = useState({
     symbol0: t0Symbol,
     symbol1: t1Symbol,
@@ -57,38 +55,6 @@ export default function SwapData({
 
   return (
     <Collapsible className="p-4 text-sm text-muted-foreground" open={collapsible} onOpenChange={onSetCollapsible}>
-      <style jsx global>
-        {`
-          /* styles.css */
-          .CollapsibleContent {
-            overflow: hidden;
-          }
-          .CollapsibleContent[data-state="open"] {
-            animation: slideDown 300ms ease-out;
-          }
-          .CollapsibleContent[data-state="closed"] {
-            animation: slideUp 300ms ease-out;
-          }
-
-          @keyframes slideDown {
-            from {
-              height: 0;
-            }
-            to {
-              height: var(--radix-collapsible-content-height);
-            }
-          }
-
-          @keyframes slideUp {
-            from {
-              height: var(--radix-collapsible-content-height);
-            }
-            to {
-              height: 0;
-            }
-          }
-        `}
-      </style>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
           <div>1 {symbol.symbol1}</div>
@@ -99,14 +65,11 @@ export default function SwapData({
             {formattedRate} {symbol.symbol0}
           </div>
         </div>
-        <CollapsibleTrigger onClick={() => setIsRotated(!isRotated)}>
-          <ChevronDown
-            size={20}
-            className={cn("transform transition duration-300 ease-in-out", isRotated ? "rotate-180" : "")}
-          />
+        <CollapsibleTrigger>
+          <ChevronDown size={20} />
         </CollapsibleTrigger>
       </div>
-      <CollapsibleContent className="CollapsibleContent space-y-3 py-4">
+      <CollapsibleContent className="space-y-3 py-4">
         <div className="flex items-center justify-between">
           <div>Slippage</div>
           <div className="text-primary">{+slippage / 100}%</div>

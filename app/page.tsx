@@ -64,7 +64,7 @@ const Swap = dynamic(
         (!getAmountsOut && !getAmountsIn);
 
       return (
-        <main>
+        <main className="grow">
           <TxConfirm
             openTxConfirm={openTxConfirm}
             onOpenTxConfirm={setOpenTxConfirm}
@@ -79,7 +79,7 @@ const Swap = dynamic(
             swapSimulation={swapSimulation}
             onResetAmount={resetAmount}
           />
-          <div className="mx-auto max-w-[29rem] px-4 sm:py-10 md:px-0">
+          <div className="mx-auto min-h-full max-w-[29rem] px-4 sm:py-10 md:px-0">
             <div className="space-y-2">
               <SwapSettings onSetSlippage={setSlippage} onSetDeadline={setDeadline} />
               <Card>

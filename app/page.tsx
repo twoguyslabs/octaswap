@@ -1,6 +1,6 @@
 "use client";
 
-import SwapBox from "@/app/components/swap-box";
+import DexBox from "@/app/components/dex-box";
 import SwapSettings from "@/app/components/swap-settings";
 import SwapTokenPlace from "@/app/components/swap-token-place";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,7 +84,8 @@ const Swap = dynamic(
               <SwapSettings onSetSlippage={setSlippage} onSetDeadline={setDeadline} />
               <Card>
                 <CardContent className="px-4 py-5">
-                  <SwapBox
+                  <DexBox
+                    label="From"
                     token={token0}
                     onSetToken={setToken0}
                     amount={amount.amount0}
@@ -99,7 +100,8 @@ const Swap = dynamic(
                     onSetToken1={setToken1}
                     onSwapAmountValue={swapAmountValue}
                   />
-                  <SwapBox
+                  <DexBox
+                    label="To"
                     token={token1}
                     onSetToken={setToken1}
                     amount={amount.amount1}

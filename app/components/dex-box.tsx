@@ -4,7 +4,8 @@ import SwapBalance from "./swap-balance";
 import SwapInput from "./swap-input";
 import useElementWidth from "@/hooks/use-element-width";
 
-export default function SwapBox({
+export default function DexBox({
+  label,
   token,
   onSetToken,
   amount,
@@ -12,6 +13,7 @@ export default function SwapBox({
   tokenBalance,
   rateAmounts,
 }: {
+  label: string;
   token: UnionToken | undefined;
   onSetToken: Dispatch<SetStateAction<UnionToken | undefined>>;
   amount: string;
@@ -24,7 +26,7 @@ export default function SwapBox({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between text-sm">
-        <div>From</div>
+        <div>{label}</div>
         <SwapBalance balance={tokenBalance} onSetAmount={onSetAmount} />
       </div>
       <div className="relative">

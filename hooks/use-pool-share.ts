@@ -5,7 +5,6 @@ import { PAIR_ABI } from "@/contracts/octaspace/dex/pair";
 import { createPair, createToken, getLiquidityMinted } from "@/lib/swap";
 import { CurrencyAmount } from "@uniswap/sdk-core";
 import { formatEther, parseEther } from "viem";
-import { useEffect } from "react";
 
 export default function usePoolShare(t0: UnionToken | undefined, t1: UnionToken | undefined, a0: string | bigint | undefined, a1: string | bigint | undefined) {
   const pairAddress = usePairAddress(t0, t1);
@@ -35,10 +34,6 @@ export default function usePoolShare(t0: UnionToken | undefined, t1: UnionToken 
   const newTotalSupply = pairTotalSupply && liquidityMinted ? pairTotalSupply + parseEther(liquidityMinted.toExact()) : undefined;
 
   const poolShare = liquidityMinted && newTotalSupply ? Number(liquidityMinted.toExact()) / Number(formatEther(newTotalSupply)) : undefined;
-
-  useEffect(() => {
-    console.log("liquidityMinted", liquidityMinted?.toExact());
-  }, [liquidityMinted]);
 
   return poolShare;
 }

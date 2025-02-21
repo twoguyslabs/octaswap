@@ -34,6 +34,8 @@ export default function useCustomTokens(address: string) {
       } else {
         setCustomTokens([]);
       }
+    } else {
+      setCustomTokens([]);
     }
   }, [chainId, address, name, symbol, decimals]);
 

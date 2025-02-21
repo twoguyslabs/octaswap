@@ -1,6 +1,5 @@
 import useAddress from "@/hooks/use-address";
 import useDexConfig from "@/hooks/use-dex-config";
-import { useEffect } from "react";
 import { parseEther } from "viem";
 import { useSimulateContract } from "wagmi";
 
@@ -38,10 +37,6 @@ export default function useAddLiquiditySimulation(t0: UnionToken | undefined, t1
   });
 
   const addLiquiditySimulation = addLiquidity || addLiquidityETH;
-
-  useEffect(() => {
-    console.log("addLiquiditySimulation", addLiquiditySimulation);
-  }, [addLiquiditySimulation]);
 
   return addLiquiditySimulation;
 }

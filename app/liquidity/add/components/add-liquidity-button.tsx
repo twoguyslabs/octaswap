@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button";
 import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { parseEther } from "viem";
 import { BaseError, Config, usePublicClient, useWriteContract } from "wagmi";
 import { WriteContractMutateAsync } from "wagmi/query";
 
 export default function AddLiquidityButton({
   t0Symbol,
   t1Symbol,
+  t0Amount,
+  balance0,
   isT0Allowance,
   isT1Allowance,
   t0ApproveSimulation,
@@ -17,6 +20,8 @@ export default function AddLiquidityButton({
 }: {
   t0Symbol: string | undefined;
   t1Symbol: string | undefined;
+  t0Amount: string | (bigint | undefined);
+  balance0: bigint | undefined;
   isT0Allowance: boolean;
   isT1Allowance: boolean;
   t0ApproveSimulation: any;
@@ -27,7 +32,8 @@ export default function AddLiquidityButton({
   const publicClient = usePublicClient();
   const [isTxExecuting, setIsTxExecuting] = useState(false);
   const { isPending: isTxPending, writeContractAsync: writeTx } = useWriteContract();
-  const disabled = (!t0ApproveSimulation && !t1ApproveSimulation && !addLiquiditySimulation) || isTxPending || isTxExecuting;
+  const isExceedBalance0 = balance0 && t0Amount ? (typeof t0Amount === "string" ? parseEther(t0Amount) > balance0 : t0Amount > balance0) : false;
+  const disabled = isExceedBalance0 || (!t0ApproveSimulation && !t1ApproveSimulation && !addLiquiditySimulation) || isTxPending || isTxExecuting;
 
   const getButtonText = () => {
     if (isTxPending) {
@@ -45,6 +51,10 @@ export default function AddLiquidityButton({
     } else {
       if (!t0Symbol || !t1Symbol) {
         return "Select tokens";
+      }
+
+      if (isExceedBalance0) {
+        return `Insufficient ${t0Symbol}`;
       }
 
       if (!isT0Allowance) {

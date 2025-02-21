@@ -48,6 +48,8 @@ const Add = dynamic(
                 <AddLiquidityButton
                   t0Symbol={token0?.symbol}
                   t1Symbol={token1?.symbol}
+                  t0Amount={amount.amount0 || quoteIn}
+                  balance0={balance0}
                   isT0Allowance={isT0Allowance}
                   isT1Allowance={isT1Allowance}
                   t0ApproveSimulation={t0ApproveSimulation}

@@ -31,7 +31,7 @@ export default async function RootLayout({
         <ReownProvider cookies={cookies}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Sidebar>{children}</Sidebar>
-            <Toaster />
+            <Toaster position="top-right" />
           </ThemeProvider>
         </ReownProvider>
       </body>

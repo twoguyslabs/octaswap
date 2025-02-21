@@ -1,14 +1,19 @@
 "use client";
 
 import DexBox from "@/app/components/dex-box";
-import SwapTokenPlace from "@/app/components/swap-token-place";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import useAmount from "@/hooks/use-amount";
 import useLiquidityRate from "@/hooks/use-liquidity-rate";
 import useToken from "@/hooks/use-token";
 import useTokenBalance from "@/hooks/use-token-balance";
 import dynamic from "next/dynamic";
+import PriceAndPool from "./components/price-and-pool";
+import { Plus } from "lucide-react";
+import usePoolShare from "@/hooks/use-pool-share";
+import useAllowance from "@/hooks/use-allowance";
+import useApproveSimulation from "@/hooks/use-approve-simulation";
+import useAddLiquiditySimulation from "./hooks/use-add-liquidity-simulation";
+import AddLiquidityButton from "./components/add-liquidity-button";
 
 const Add = dynamic(
   () =>
@@ -16,43 +21,40 @@ const Add = dynamic(
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount();
+      const { amount, setAmount0, setAmount1, resetAmount } = useAmount();
 
       const balance0 = useTokenBalance(token0);
       const balance1 = useTokenBalance(token1);
 
-      const quote = useLiquidityRate(token0, token1, amount.amount0 || amount.amount1);
+      const { quoteOut, quoteIn, flatQuoteOut, flatQuoteIn } = useLiquidityRate(token0, token1, amount.amount0, amount.amount1);
+      const poolShare = usePoolShare(token0, token1, amount.amount0 || quoteIn, amount.amount1 || quoteOut);
+
+      const { isAllowance: isT0Allowance } = useAllowance(token0, amount.amount0 || quoteIn);
+      const { isAllowance: isT1Allowance } = useAllowance(token1, amount.amount1 || quoteOut);
+
+      const t0ApproveSimulation = useApproveSimulation(token0, amount.amount0 || quoteIn, isT0Allowance);
+      const t1ApproveSimulation = useApproveSimulation(token1, amount.amount1 || quoteOut, isT1Allowance);
+
+      const addLiquiditySimulation = useAddLiquiditySimulation(token0, token1, amount.amount0 || quoteIn, amount.amount1 || quoteOut);
       return (
         <main className="grow">
-          <div className="mx-auto min-h-full max-w-[29rem] px-4 sm:py-10 md:px-0">
+          <div className="mx-auto min-h-full max-w-[29rem] px-4 py-5 sm:py-10 md:px-0">
             <Card>
               <CardContent className="px-4 py-5">
-                <DexBox
-                  label="Pair 1"
-                  token={token0}
-                  onSetToken={setToken0}
-                  amount={amount.amount0}
-                  onSetAmount={setAmount0}
-                  tokenBalance={balance0}
-                  rateAmounts={quote}
+                <DexBox label={null} token={token0} onSetToken={setToken0} amount={amount.amount0} onSetAmount={setAmount0} tokenBalance={balance0} rateAmounts={quoteIn} />
+                <Plus className="mx-auto mt-7" />
+                <DexBox label={null} token={token1} onSetToken={setToken1} amount={amount.amount1} onSetAmount={setAmount1} tokenBalance={balance1} rateAmounts={quoteOut} />
+                <PriceAndPool t0Symbol={token0?.symbol} t1Symbol={token1?.symbol} flatQuoteOut={flatQuoteOut} flatQuoteIn={flatQuoteIn} poolShare={poolShare} />
+                <AddLiquidityButton
+                  t0Symbol={token0?.symbol}
+                  t1Symbol={token1?.symbol}
+                  isT0Allowance={isT0Allowance}
+                  isT1Allowance={isT1Allowance}
+                  t0ApproveSimulation={t0ApproveSimulation}
+                  t1ApproveSimulation={t1ApproveSimulation}
+                  addLiquiditySimulation={addLiquiditySimulation}
+                  onResetAmount={resetAmount}
                 />
-                <SwapTokenPlace
-                  token0={token0}
-                  token1={token1}
-                  onSetToken0={setToken0}
-                  onSetToken1={setToken1}
-                  onSwapAmountValue={swapAmountValue}
-                />
-                <DexBox
-                  label="Pair 2"
-                  token={token1}
-                  onSetToken={setToken1}
-                  amount={amount.amount1}
-                  onSetAmount={setAmount1}
-                  tokenBalance={balance1}
-                  rateAmounts={quote}
-                />
-                <Button className="mt-5 w-full">Add Liquidity</Button>
               </CardContent>
             </Card>
           </div>

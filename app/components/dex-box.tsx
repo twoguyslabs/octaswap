@@ -13,7 +13,7 @@ export default function DexBox({
   tokenBalance,
   rateAmounts,
 }: {
-  label: string;
+  label: string | null;
   token: UnionToken | undefined;
   onSetToken: Dispatch<SetStateAction<UnionToken | undefined>>;
   amount: string;
@@ -31,11 +31,7 @@ export default function DexBox({
       </div>
       <div className="relative">
         <SwapInput amount={amount} onSetAmount={onSetAmount} rateAmounts={rateAmounts} elementWidth={elementWidth} />
-        <TokenListWrapper
-          token={token}
-          onSetToken={onSetToken}
-          elementRef={elementRef as React.RefObject<HTMLButtonElement | null>}
-        />
+        <TokenListWrapper token={token} onSetToken={onSetToken} elementRef={elementRef as React.RefObject<HTMLButtonElement | null>} />
       </div>
     </div>
   );

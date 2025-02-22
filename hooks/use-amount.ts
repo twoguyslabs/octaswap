@@ -1,7 +1,10 @@
 import { numericValidation } from "@/lib/utils";
 import { useCallback, useState } from "react";
+import usePairAddress from "./use-pair-address";
 
-export default function useAmount() {
+export default function useAmount(t0: UnionToken | undefined, t1: UnionToken | undefined) {
+  const { isPairExist } = usePairAddress(t0, t1);
+
   const [amount, setAmount] = useState({
     amount0: "",
     amount1: "",
@@ -9,12 +12,12 @@ export default function useAmount() {
 
   const setAmount0 = (value: string) => {
     if (!numericValidation.test(value)) return;
-    setAmount({ amount0: value, amount1: "" });
+    setAmount({ amount0: value, amount1: !isPairExist ? amount.amount1 : "" });
   };
 
   const setAmount1 = (value: string) => {
     if (!numericValidation.test(value)) return;
-    setAmount({ amount1: value, amount0: "" });
+    setAmount({ amount0: !isPairExist ? amount.amount0 : "", amount1: value });
   };
 
   const swapAmountValue = () => {

@@ -1,5 +1,6 @@
 import { useReadContract } from "wagmi";
 import useDexConfig from "./use-dex-config";
+import { zeroAddress } from "viem";
 
 export default function usePairAddress(t0: UnionToken | undefined, t1: UnionToken | undefined) {
   const { FACTORY_ADDRESS, FACTORY_ABI } = useDexConfig();
@@ -12,5 +13,7 @@ export default function usePairAddress(t0: UnionToken | undefined, t1: UnionToke
     args: [t0?.address, t1?.address],
   });
 
-  return pairAddress;
+  const isPairExist = pairAddress ? pairAddress !== zeroAddress : undefined;
+
+  return { pairAddress, isPairExist };
 }

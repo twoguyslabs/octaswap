@@ -21,7 +21,7 @@ const Add = dynamic(
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const { amount, setAmount0, setAmount1, resetAmount } = useAmount();
+      const { amount, setAmount0, setAmount1, resetAmount } = useAmount(token0, token1);
 
       const balance0 = useTokenBalance(token0);
       const balance1 = useTokenBalance(token1);
@@ -44,7 +44,7 @@ const Add = dynamic(
                 <DexBox label={null} token={token0} onSetToken={setToken0} amount={amount.amount0} onSetAmount={setAmount0} tokenBalance={balance0} rateAmounts={quoteIn} />
                 <Plus className="mx-auto mt-7" />
                 <DexBox label={null} token={token1} onSetToken={setToken1} amount={amount.amount1} onSetAmount={setAmount1} tokenBalance={balance1} rateAmounts={quoteOut} />
-                <PriceAndPool t0Symbol={token0?.symbol} t1Symbol={token1?.symbol} flatQuoteOut={flatQuoteOut} flatQuoteIn={flatQuoteIn} poolShare={poolShare} />
+                <PriceAndPool t0={token0} t1={token1} a0={amount.amount0} a1={amount.amount1} flatQuoteOut={flatQuoteOut} flatQuoteIn={flatQuoteIn} poolShare={poolShare} />
                 <AddLiquidityButton
                   t0Symbol={token0?.symbol}
                   t1Symbol={token1?.symbol}

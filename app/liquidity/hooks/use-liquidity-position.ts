@@ -1,0 +1,68 @@
+import { PAIR_ABI } from "@/contracts/octaspace/dex/pair";
+import useAddress from "@/hooks/use-address";
+import useDexConfig from "@/hooks/use-dex-config";
+import { useEffect } from "react";
+import { erc20Abi, formatEther } from "viem";
+import { useReadContract } from "wagmi";
+
+export default function useLiqduitiyPosition(pairIndex: number) {
+  const address = useAddress();
+  const { FACTORY_ADDRESS, FACTORY_ABI } = useDexConfig();
+
+  const { data: pairAddress } = useReadContract({
+    address: FACTORY_ADDRESS,
+    abi: FACTORY_ABI,
+    functionName: "allPairs",
+    args: [BigInt(pairIndex)],
+  });
+
+  const { data: reserves } = useReadContract({
+    address: pairAddress,
+    abi: PAIR_ABI,
+    functionName: "getReserves",
+    query: {
+      refetchInterval: 1000,
+    },
+  });
+
+  const { data: pairTotalSupply } = useReadContract({
+    address: pairAddress,
+    abi: PAIR_ABI,
+    functionName: "totalSupply",
+    query: {
+      refetchInterval: 1000,
+    },
+  });
+
+  const { data: liquidityToken } = useReadContract({
+    address: pairAddress,
+    abi: erc20Abi,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const { data: token0Address } = useReadContract({
+    address: pairAddress,
+    abi: PAIR_ABI,
+    functionName: "token0",
+  });
+
+  const { data: token1Address } = useReadContract({
+    address: pairAddress,
+    abi: PAIR_ABI,
+    functionName: "token1",
+  });
+
+  const [reserve0, reserve1] = reserves ?? [];
+  const poolShare = pairTotalSupply && liquidityToken ? Number(formatEther(liquidityToken)) / Number(formatEther(pairTotalSupply)) : 0;
+  const token0 = reserve0 ? poolShare * Number(formatEther(reserve0)) : 0;
+  const token1 = reserve1 ? poolShare * Number(formatEther(reserve1)) : 0;
+
+  useEffect(() => {
+    console.log("poolShare", poolShare);
+    console.log("token0", token0);
+    console.log("token1", token1);
+  }, [poolShare, token0, token1]);
+
+  return { liquidityToken, token0Address, token1Address, token0, token1, poolShare };
+}

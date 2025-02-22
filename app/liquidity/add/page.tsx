@@ -36,6 +36,7 @@ const Add = dynamic(
       const t1ApproveSimulation = useApproveSimulation(token1, amount.amount1 || quoteOut, isT1Allowance);
 
       const addLiquiditySimulation = useAddLiquiditySimulation(token0, token1, amount.amount0 || quoteIn, amount.amount1 || quoteOut);
+
       return (
         <main className="grow">
           <div className="mx-auto min-h-full max-w-[29rem] px-4 py-5 sm:py-10 md:px-0">

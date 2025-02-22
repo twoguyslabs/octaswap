@@ -28,7 +28,7 @@ const Swap = dynamic(
       const [token0, setToken0] = useToken({ useNative: true });
       const [token1, setToken1] = useToken({ useNative: false });
 
-      const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount();
+      const { amount, setAmount0, setAmount1, swapAmountValue, resetAmount } = useAmount(token0, token1);
 
       const [slippage, setSlippage] = useState("50"); // in bps - default to 0.5%
       const [deadline, setDeadline] = useState("5"); // default to 5 minutes
@@ -36,32 +36,16 @@ const Swap = dynamic(
       const balance0 = useTokenBalance(token0);
       const balance1 = useTokenBalance(token1);
 
-      const { getAmountsOut, getAmountsIn, flatAmountsOut, flatAmountsIn } = useSwapRate(
-        token0,
-        token1,
-        amount.amount0,
-        amount.amount1,
-      );
+      const { getAmountsOut, getAmountsIn, flatAmountsOut, flatAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
 
       const reserves = usePairReserves(token0, token1);
       const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
 
       const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn, isAllowance);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
-      const { swapSimulation, amountOutMin, amountInMax, priceImpactOut, priceImpactIn } = useSwapSimulation(
-        token0,
-        token1,
-        slippage,
-        deadline,
-        swapExactInput,
-        swapExactOutput,
-      );
+      const { swapSimulation, amountOutMin, amountInMax, priceImpactOut, priceImpactIn } = useSwapSimulation(token0, token1, slippage, deadline, swapExactInput, swapExactOutput);
 
-      const isSwapData =
-        !token0?.chainId ||
-        !token1?.chainId ||
-        (!amount.amount0 && !amount.amount1) ||
-        (!getAmountsOut && !getAmountsIn);
+      const isSwapData = !token0?.chainId || !token1?.chainId || (!amount.amount0 && !amount.amount1) || (!getAmountsOut && !getAmountsIn);
 
       return (
         <main className="grow">
@@ -84,31 +68,9 @@ const Swap = dynamic(
               <SwapSettings onSetSlippage={setSlippage} onSetDeadline={setDeadline} />
               <Card>
                 <CardContent className="px-4 py-5">
-                  <DexBox
-                    label="From"
-                    token={token0}
-                    onSetToken={setToken0}
-                    amount={amount.amount0}
-                    onSetAmount={setAmount0}
-                    tokenBalance={balance0}
-                    rateAmounts={getAmountsIn}
-                  />
-                  <SwapTokenPlace
-                    token0={token0}
-                    token1={token1}
-                    onSetToken0={setToken0}
-                    onSetToken1={setToken1}
-                    onSwapAmountValue={swapAmountValue}
-                  />
-                  <DexBox
-                    label="To"
-                    token={token1}
-                    onSetToken={setToken1}
-                    amount={amount.amount1}
-                    onSetAmount={setAmount1}
-                    tokenBalance={balance1}
-                    rateAmounts={getAmountsOut}
-                  />
+                  <DexBox label="From" token={token0} onSetToken={setToken0} amount={amount.amount0} onSetAmount={setAmount0} tokenBalance={balance0} rateAmounts={getAmountsIn} />
+                  <SwapTokenPlace token0={token0} token1={token1} onSetToken0={setToken0} onSetToken1={setToken1} onSwapAmountValue={swapAmountValue} />
+                  <DexBox label="To" token={token1} onSetToken={setToken1} amount={amount.amount1} onSetAmount={setAmount1} tokenBalance={balance1} rateAmounts={getAmountsOut} />
                   <ReviewButton
                     onOpenTxConfirm={setOpenTxConfirm}
                     t0={token0}

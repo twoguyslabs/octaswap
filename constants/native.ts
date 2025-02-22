@@ -37,10 +37,20 @@ export const NATIVE: { [chainId: number]: UnionToken } = {
     logoURI: "/eth-logo.png",
     isNative: true,
   },
+  10143: {
+    chainId: 10143,
+    address: "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701",
+    name: "Monad Testnet",
+    symbol: "MON",
+    decimals: 18,
+    logoURI: "/monad-logo.svg",
+    isNative: true,
+  },
 };
 
 export const WETH9: { [chainId: number]: Token } = {
   [800001]: new Token(800001, "0x05f1f289A97B2b4032e76c6de4aD746f02F20d9A", 18, "WOCTA", "Wrapped OCTA"),
   [1]: new Token(1, "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 18, "WETH", "Wrapped Ether"),
   [56]: new Token(56, "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", 18, "WBNB", "Wrapped BNB"),
+  [10143]: new Token(10143, "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701", 18, "WMON", "Wrapped Monad"),
 };

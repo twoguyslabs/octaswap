@@ -15,4 +15,19 @@ const octaspace = {
   },
 } as const satisfies Chain;
 
-export { octaspace };
+const monadTestnet = {
+  id: 10143,
+  name: "Monad Testnet",
+  nativeCurrency: { name: "Monad Testnet", symbol: "MON", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://testnet-rpc.monad.xyz/"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Monad Explorer",
+      url: "http://testnet.monadexplorer.com/",
+    },
+  },
+} as const satisfies Chain;
+
+export { octaspace, monadTestnet };

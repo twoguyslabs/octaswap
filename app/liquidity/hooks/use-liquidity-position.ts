@@ -13,6 +13,9 @@ export default function useLiquidityPosition(pairIndex: number) {
     abi: FACTORY_ABI,
     functionName: "allPairs",
     args: [BigInt(pairIndex)],
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: reserves } = useReadContract({
@@ -38,30 +41,45 @@ export default function useLiquidityPosition(pairIndex: number) {
     abi: erc20Abi,
     functionName: "balanceOf",
     args: [address],
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: token0Address } = useReadContract({
     address: pairAddress,
     abi: PAIR_ABI,
     functionName: "token0",
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: token1Address } = useReadContract({
     address: pairAddress,
     abi: PAIR_ABI,
     functionName: "token1",
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: token0Symbol } = useReadContract({
     address: token0Address,
     abi: erc20Abi,
     functionName: "symbol",
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const { data: token1Symbol } = useReadContract({
     address: token1Address,
     abi: erc20Abi,
     functionName: "symbol",
+    query: {
+      refetchInterval: 1000,
+    },
   });
 
   const [reserve0, reserve1] = reserves ?? [];

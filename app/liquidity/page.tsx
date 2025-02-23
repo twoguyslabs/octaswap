@@ -17,6 +17,9 @@ const Liquidity = dynamic(
         address: FACTORY_ADDRESS,
         abi: FACTORY_ABI,
         functionName: "allPairsLength",
+        query: {
+          refetchInterval: 1000,
+        },
       });
 
       // Create array from allPairsLength

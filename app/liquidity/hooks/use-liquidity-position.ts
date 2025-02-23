@@ -4,7 +4,7 @@ import useDexConfig from "@/hooks/use-dex-config";
 import { erc20Abi, formatEther } from "viem";
 import { useReadContract } from "wagmi";
 
-export default function useLiqduitiyPosition(pairIndex: number) {
+export default function useLiquidityPosition(pairIndex: number) {
   const address = useAddress();
   const { FACTORY_ADDRESS, FACTORY_ABI } = useDexConfig();
 
@@ -52,6 +52,18 @@ export default function useLiqduitiyPosition(pairIndex: number) {
     functionName: "token1",
   });
 
+  const { data: token0Symbol } = useReadContract({
+    address: token0Address,
+    abi: erc20Abi,
+    functionName: "symbol",
+  });
+
+  const { data: token1Symbol } = useReadContract({
+    address: token1Address,
+    abi: erc20Abi,
+    functionName: "symbol",
+  });
+
   const [reserve0, reserve1] = reserves ?? [];
 
   const poolShare = pairTotalSupply && liquidityToken ? Number(formatEther(liquidityToken)) / Number(formatEther(pairTotalSupply)) : 0;
@@ -59,5 +71,5 @@ export default function useLiqduitiyPosition(pairIndex: number) {
   const token0 = reserve0 ? poolShare * Number(formatEther(reserve0)) : 0;
   const token1 = reserve1 ? poolShare * Number(formatEther(reserve1)) : 0;
 
-  return { liquidityToken, token0Address, token1Address, token0, token1, poolShare };
+  return { liquidityToken, token0Address, token1Address, token0Symbol, token1Symbol, token0, token1, poolShare };
 }

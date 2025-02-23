@@ -18,8 +18,8 @@ import AddLiquidityButton from "./components/add-liquidity-button";
 const Add = dynamic(
   () =>
     Promise.resolve(function Add() {
-      const [token0, setToken0] = useToken({ useNative: true });
-      const [token1, setToken1] = useToken({ useNative: false });
+      const { token: token0, setToken: setToken0 } = useToken({ useNative: true });
+      const { token: token1, setToken: setToken1 } = useToken({ useNative: false });
 
       const { amount, setAmount0, setAmount1, resetAmount } = useAmount(token0, token1);
 

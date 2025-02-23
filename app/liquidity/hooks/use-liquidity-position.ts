@@ -1,7 +1,6 @@
 import { PAIR_ABI } from "@/contracts/octaspace/dex/pair";
 import useAddress from "@/hooks/use-address";
 import useDexConfig from "@/hooks/use-dex-config";
-import { useEffect } from "react";
 import { erc20Abi, formatEther } from "viem";
 import { useReadContract } from "wagmi";
 
@@ -54,15 +53,11 @@ export default function useLiqduitiyPosition(pairIndex: number) {
   });
 
   const [reserve0, reserve1] = reserves ?? [];
+
   const poolShare = pairTotalSupply && liquidityToken ? Number(formatEther(liquidityToken)) / Number(formatEther(pairTotalSupply)) : 0;
+
   const token0 = reserve0 ? poolShare * Number(formatEther(reserve0)) : 0;
   const token1 = reserve1 ? poolShare * Number(formatEther(reserve1)) : 0;
-
-  useEffect(() => {
-    console.log("poolShare", poolShare);
-    console.log("token0", token0);
-    console.log("token1", token1);
-  }, [poolShare, token0, token1]);
 
   return { liquidityToken, token0Address, token1Address, token0, token1, poolShare };
 }

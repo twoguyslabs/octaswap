@@ -29,11 +29,11 @@ const Add = dynamic(
       const { quoteOut, quoteIn, flatQuoteOut, flatQuoteIn } = useLiquidityRate(token0, token1, amount.amount0, amount.amount1);
       const poolShare = usePoolShare(token0, token1, amount.amount0 || quoteIn, amount.amount1 || quoteOut);
 
-      const { isAllowance: isT0Allowance } = useAllowance(token0, amount.amount0 || quoteIn);
-      const { isAllowance: isT1Allowance } = useAllowance(token1, amount.amount1 || quoteOut);
+      const { isAllowance: isT0Allowance } = useAllowance(token0?.address, amount.amount0 || quoteIn);
+      const { isAllowance: isT1Allowance } = useAllowance(token1?.address, amount.amount1 || quoteOut);
 
-      const t0ApproveSimulation = useApproveSimulation(token0, amount.amount0 || quoteIn, isT0Allowance);
-      const t1ApproveSimulation = useApproveSimulation(token1, amount.amount1 || quoteOut, isT1Allowance);
+      const t0ApproveSimulation = useApproveSimulation(token0?.address, amount.amount0 || quoteIn, isT0Allowance);
+      const t1ApproveSimulation = useApproveSimulation(token1?.address, amount.amount1 || quoteOut, isT1Allowance);
 
       const addLiquiditySimulation = useAddLiquiditySimulation(token0, token1, amount.amount0 || quoteIn, amount.amount1 || quoteOut);
 

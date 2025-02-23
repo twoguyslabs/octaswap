@@ -59,22 +59,10 @@ export default function TokenList({
 
     return (
       <div style={style}>
-        <Button
-          variant="ghost"
-          className="flex w-full justify-start gap-x-3 rounded-none py-8"
-          onClick={() => handleClick(token)}
-        >
+        <Button variant="ghost" className="flex w-full justify-start gap-x-3 rounded-none py-8" onClick={() => handleClick(token)}>
           {token.logoURI ? (
             <>
-              <Image
-                src={token.logoURI}
-                alt={`${token.name} logo`}
-                width={100}
-                height={100}
-                quality={100}
-                priority
-                className="h-8 w-8"
-              />
+              <Image src={token.logoURI} alt={`${token.name} logo`} width={100} height={100} quality={100} priority className="h-8 w-8" />
               <div className="flex flex-col items-start">
                 <span className="text-lg font-bold">{token.symbol}</span>
                 <span className="text-muted-foreground">{token.name}</span>
@@ -95,19 +83,14 @@ export default function TokenList({
   };
 
   return (
-    <DialogContent className="h-fit w-[95%] overflow-hidden rounded-lg pt-14" aria-describedby={undefined}>
+    <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className="h-fit w-[95%] overflow-hidden rounded-lg pt-14" aria-describedby={undefined}>
       <DialogHeader className="hidden">
         <VisuallyHidden>
           <DialogTitle></DialogTitle>
         </VisuallyHidden>
       </DialogHeader>
       <div className="space-y-5">
-        <Input
-          type="text"
-          placeholder="Search tokens"
-          value={searchQuery}
-          onChange={(e) => onSearchQuery(e.target.value)}
-        />
+        <Input type="text" placeholder="Search tokens" value={searchQuery} onChange={(e) => onSearchQuery(e.target.value)} />
         <div className="space-y-4">
           <div className="flex items-center gap-x-2">
             <Coins size={20} />
@@ -128,14 +111,7 @@ export default function TokenList({
             `}</style>
             <AutoSizer>
               {({ height, width }) => (
-                <List
-                  className="token-list"
-                  height={height}
-                  width={width}
-                  itemCount={tokenList.length}
-                  itemSize={65}
-                  overscanCount={5}
-                >
+                <List className="token-list" height={height} width={width} itemCount={tokenList.length} itemSize={65} overscanCount={5}>
                   {TokenRow}
                 </List>
               )}

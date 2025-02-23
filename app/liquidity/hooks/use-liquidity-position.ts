@@ -89,5 +89,5 @@ export default function useLiquidityPosition(pairIndex: number) {
   const token0Amount = reserve0 ? poolShare * Number(formatEther(reserve0)) : 0;
   const token1Amount = reserve1 ? poolShare * Number(formatEther(reserve1)) : 0;
 
-  return { liquidityToken, token0Address, token1Address, token0Symbol, token1Symbol, token0Amount, token1Amount, poolShare };
+  return { pairAddress, liquidityToken, token0Address, token1Address, token0Symbol, token1Symbol, token0Amount, token1Amount, poolShare };
 }

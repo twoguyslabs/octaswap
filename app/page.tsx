@@ -39,9 +39,9 @@ const Swap = dynamic(
       const { getAmountsOut, getAmountsIn, flatAmountsOut, flatAmountsIn } = useSwapRate(token0, token1, amount.amount0, amount.amount1);
 
       const reserves = usePairReserves(token0, token1);
-      const { isAllowance } = useAllowance(token0, amount.amount0 || getAmountsIn);
+      const { isAllowance } = useAllowance(token0?.address, amount.amount0 || getAmountsIn);
 
-      const approveSimulation = useApproveSimulation(token0, amount.amount0 || getAmountsIn, isAllowance);
+      const approveSimulation = useApproveSimulation(token0?.address, amount.amount0 || getAmountsIn, isAllowance);
       const { swapExactInput, swapExactOutput } = swap(token0, token1, amount.amount0, amount.amount1, reserves);
       const { swapSimulation, amountOutMin, amountInMax, priceImpactOut, priceImpactIn } = useSwapSimulation(token0, token1, slippage, deadline, swapExactInput, swapExactOutput);
 

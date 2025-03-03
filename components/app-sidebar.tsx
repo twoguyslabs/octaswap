@@ -26,8 +26,8 @@ const data = {
         },
         {
           title: "Staking",
-          url: "/staking",
-          isActive: false,
+          url: "https://staking.octaswap.io",
+          isActive: true,
         },
         {
           title: "Launchpad",

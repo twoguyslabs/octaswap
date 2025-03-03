@@ -2,12 +2,7 @@ import { parseEther } from "viem";
 import { useReadContract } from "wagmi";
 import useDexConfig from "./use-dex-config";
 
-export default function useSwapRate(
-  token0: UnionToken | undefined,
-  token1: UnionToken | undefined,
-  amount0: string,
-  amount1: string,
-) {
+export default function useSwapRate(token0: UnionToken | undefined, token1: UnionToken | undefined, amount0: string, amount1: string) {
   const { ROUTER_ADDRESS, ROUTER_ABI } = useDexConfig();
 
   const { data: getAmountsOut } = useReadContract({

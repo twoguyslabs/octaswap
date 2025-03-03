@@ -63,7 +63,7 @@ const data = {
   misc: [
     {
       name: "Whitepaper",
-      url: "https://up5ojfu58o0vkn52.public.blob.vercel-storage.com/docs/OctaSwap%20Whitepaper.pdf",
+      url: "https://octaswap.gitbook.io/octaswap/",
       icon: BookOpen,
       isActive: true,
     },
